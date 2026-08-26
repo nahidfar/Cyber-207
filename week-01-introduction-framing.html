@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CYBER 207 Week 1 instructor lesson: Introduction and Framing for Machine Learning in Cybersecurity.">
+  <title>CYBER 207 | Week 1: Introduction &amp; Framing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --ink: #17201d;
+      --muted: #58645f;
+      --paper: #f4f1e8;
+      --surface: #fffdf7;
+      --line: #c9cec8;
+      --forest: #174c3c;
+      --forest-2: #236c54;
+      --signal: #e5482f;
+      --amber: #e4a11b;
+      --blue: #2166a5;
+      --code: #12221d;
+      --shadow: 0 8px 24px rgba(23, 32, 29, 0.08);
+      --rail: 17rem;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(rgba(23, 76, 60, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(23, 76, 60, 0.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      font-family: Manrope, sans-serif;
+      line-height: 1.6;
+      letter-spacing: 0;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: var(--forest-2); text-underline-offset: 3px; }
+    code, pre, .mono { font-family: "IBM Plex Mono", monospace; }
+    h1, h2, h3 { font-family: "Source Serif 4", serif; line-height: 1.12; letter-spacing: 0; }
+    h1 { margin: 0; max-width: 850px; font-size: clamp(2.25rem, 6vw, 5.75rem); }
+    h2 { margin: 0 0 1rem; font-size: clamp(1.9rem, 4vw, 3.25rem); }
+    h3 { margin: 0 0 0.6rem; font-size: 1.3rem; }
+    p { margin: 0 0 1rem; }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 40;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 1.25rem;
+      color: #fff;
+      background: var(--ink);
+      border-bottom: 3px solid var(--signal);
+    }
+    .brand { display: flex; align-items: center; gap: 0.8rem; font-weight: 700; }
+    .brand-mark {
+      display: grid;
+      width: 2rem;
+      height: 2rem;
+      place-items: center;
+      color: var(--ink);
+      background: var(--amber);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .top-actions { display: flex; align-items: center; gap: 0.5rem; }
+    .icon-btn, .timer-btn {
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+      color: #fff;
+      background: transparent;
+      border: 1px solid #56605c;
+      border-radius: 4px;
+    }
+    .icon-btn { display: grid; place-items: center; }
+    .timer-btn { padding: 0.35rem 0.8rem; font-family: "IBM Plex Mono", monospace; }
+    .icon-btn:hover, .timer-btn:hover { border-color: var(--amber); }
+
+    .progress { position: fixed; z-index: 50; inset: 4rem auto auto 0; width: 0; height: 3px; background: var(--amber); }
+
+    .rail {
+      position: fixed;
+      z-index: 30;
+      top: 4rem;
+      bottom: 0;
+      left: 0;
+      width: var(--rail);
+      overflow-y: auto;
+      padding: 1.5rem 1rem 2rem;
+      background: #e8e8de;
+      border-right: 1px solid var(--line);
+    }
+    .rail-label { margin: 0 0 0.75rem 0.6rem; color: var(--muted); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
+    .rail nav { display: grid; gap: 0.25rem; }
+    .rail-link {
+      display: grid;
+      grid-template-columns: 2rem 1fr auto;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      border-radius: 0 4px 4px 0;
+    }
+    .rail-link:hover, .rail-link.active { background: var(--surface); border-left-color: var(--signal); }
+    .rail-link .num { color: var(--forest); font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; }
+    .rail-link .label { font-size: 0.84rem; line-height: 1.25; }
+    .rail-link .mins { color: var(--muted); font-size: 0.68rem; }
+    .rail-total { margin-top: 1rem; padding: 0.75rem; color: #fff; background: var(--forest); font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; }
+
+    main { margin-left: var(--rail); padding-top: 4rem; }
+    .hero {
+      min-height: min(760px, calc(100vh - 4rem));
+      display: grid;
+      align-content: center;
+      padding: clamp(3rem, 8vw, 8rem);
+      color: #fff;
+      background: var(--forest);
+      border-bottom: 10px solid var(--amber);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: "f(x) → y";
+      position: absolute;
+      right: -0.05em;
+      bottom: -0.18em;
+      color: rgba(255, 255, 255, 0.06);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: clamp(6rem, 18vw, 18rem);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .eyebrow { margin-bottom: 1rem; color: #d5dfd9; font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; text-transform: uppercase; }
+    .hero p { max-width: 680px; margin-top: 1.5rem; color: #e0e9e4; font-size: 1.1rem; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+    .tag { padding: 0.35rem 0.65rem; color: #fff; border: 1px solid #7ca08f; border-radius: 3px; font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; }
+
+    .lesson {
+      min-height: 80vh;
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.25rem, 7vw, 7rem);
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 4rem;
+    }
+    .lesson:nth-of-type(even) { background: rgba(255, 253, 247, 0.72); }
+    main { counter-reset: teaching-frame; }
+    .lesson-inner { max-width: 1100px; margin: 0 auto; }
+    .section-kicker { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; color: var(--signal); font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; }
+    .section-kicker::after { content: ""; width: 4rem; height: 2px; background: var(--signal); }
+    .lead { max-width: 850px; color: #35423d; font-family: "Source Serif 4", serif; font-size: clamp(1.15rem, 2.2vw, 1.55rem); }
+    .grid-2, .grid-3 { display: grid; gap: 1rem; margin-top: 2rem; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel {
+      counter-increment: teaching-frame;
+      padding: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--forest);
+      border-radius: 4px;
+      box-shadow: var(--shadow);
+    }
+    .panel::before, .lab::before, .quiz::before, .score-demo::before, .concept-frame::before {
+      content: "FRAME " counter(teaching-frame, decimal-leading-zero);
+      display: block;
+      margin-bottom: 0.7rem;
+      color: var(--signal);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.66rem;
+      font-weight: 700;
+    }
+    .panel.accent { border-top-color: var(--signal); }
+    .panel.warning { border-top-color: var(--amber); }
+    .panel p:last-child { margin-bottom: 0; }
+    .panel-icon { width: 2rem; height: 2rem; margin-bottom: 0.75rem; color: var(--forest); }
+    .small { color: var(--muted); font-size: 0.84rem; }
+
+    .objectives { display: grid; gap: 0.75rem; margin: 2rem 0; padding: 0; list-style: none; counter-reset: objectives; }
+    .objectives li { display: grid; grid-template-columns: 2.4rem 1fr; gap: 0.75rem; align-items: start; }
+    .objectives li::before {
+      counter-increment: objectives;
+      content: counter(objectives, decimal-leading-zero);
+      display: grid;
+      width: 2.4rem;
+      height: 2.4rem;
+      place-items: center;
+      color: #fff;
+      background: var(--forest);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+    }
+
+    .timeline { display: grid; gap: 0; margin-top: 2rem; border: 1px solid var(--line); }
+    .timeline-row { display: grid; grid-template-columns: 6rem 4rem 1fr; align-items: center; gap: 1rem; padding: 0.8rem 1rem; background: var(--surface); border-bottom: 1px solid var(--line); }
+    .timeline-row:last-child { border-bottom: 0; }
+    .timeline-row strong { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; }
+    .timeline-row span { color: var(--muted); font-size: 0.8rem; }
+
+    .compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: stretch; margin-top: 2rem; }
+    .compare-side { padding: 1.5rem; background: var(--surface); border: 1px solid var(--line); }
+    .compare-side h3 { color: var(--forest); }
+    .compare-arrow { display: grid; place-items: center; color: var(--signal); }
+    .flow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem; margin: 1.5rem 0; }
+    .flow-node { padding: 0.7rem 0.9rem; background: var(--surface); border: 1px solid var(--forest); border-radius: 3px; font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; }
+    .flow-arrow { color: var(--signal); font-weight: 700; }
+
+    .code-block { overflow-x: auto; margin: 1.5rem 0; padding: 1.25rem; color: #d9e8e1; background: var(--code); border-left: 5px solid var(--amber); border-radius: 3px; font-size: 0.84rem; line-height: 1.7; }
+    .code-block .comment { color: #8caaa0; }
+    .code-block .hot { color: #ffb49f; }
+    .code-block .key { color: #f4cc72; }
+
+    .lab {
+      counter-increment: teaching-frame;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #e9f0ec;
+      border: 2px solid var(--forest);
+      border-radius: 4px;
+    }
+    .lab-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .lab-badge { padding: 0.25rem 0.5rem; color: #fff; background: var(--signal); font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; }
+    .task-list { margin: 0; padding-left: 1.25rem; }
+    .task-list li { margin: 0.5rem 0; }
+    .instructor-note { margin-top: 1.5rem; padding: 1rem 1.25rem; color: #fff; background: var(--ink); border-left: 5px solid var(--amber); }
+    .instructor-note summary { cursor: pointer; font-weight: 700; }
+    .instructor-note p { margin: 0.8rem 0 0; color: #dce3df; }
+
+    .mutation-stage { display: grid; gap: 1rem; margin-top: 1rem; }
+    .sample { padding: 1rem; background: var(--code); border: 2px solid transparent; border-radius: 3px; color: #d9e8e1; font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; }
+    .sample.detected { border-color: var(--signal); }
+    .sample.evaded { border-color: var(--amber); }
+    .mutate-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-height: 2.6rem;
+      padding: 0.5rem 0.85rem;
+      color: #fff;
+      background: var(--forest);
+      border: 0;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+    .action-btn:hover { background: var(--forest-2); }
+    .action-btn.secondary { color: var(--ink); background: var(--amber); }
+    .status { min-height: 2rem; padding: 0.45rem 0.7rem; background: var(--surface); border: 1px solid var(--line); font-family: "IBM Plex Mono", monospace; font-size: 0.76rem; }
+
+    .dga-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin: 1rem 0; }
+    .domain-btn { padding: 0.8rem; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 3px; font-family: "IBM Plex Mono", monospace; }
+    .domain-btn:hover { border-color: var(--forest); }
+    .domain-btn.correct { color: #fff; background: var(--forest); }
+    .domain-btn.incorrect { color: #fff; background: var(--signal); }
+
+    .score-demo { counter-increment: teaching-frame; display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr); gap: 2rem; align-items: center; margin-top: 2rem; }
+    .control { margin-bottom: 1.25rem; }
+    .control label { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 0.3rem; font-weight: 700; }
+    input[type="range"] { width: 100%; accent-color: var(--signal); }
+    .gauge { display: grid; width: min(320px, 100%); aspect-ratio: 1; place-items: center; margin: auto; background: var(--surface); border: 18px solid #d6ddd8; border-radius: 50%; box-shadow: inset 0 0 0 2px var(--line); }
+    .gauge-inner { text-align: center; }
+    .gauge-score { display: block; color: var(--forest); font-family: "Source Serif 4", serif; font-size: 3.5rem; font-weight: 700; line-height: 1; }
+    .gauge-label { color: var(--muted); font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; }
+
+    .quiz { counter-increment: teaching-frame; margin-top: 2rem; padding: 1.5rem; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--blue); }
+    .quiz-options { display: grid; gap: 0.5rem; margin-top: 1rem; }
+    .quiz-btn { padding: 0.8rem 1rem; text-align: left; background: #f6f7f3; border: 1px solid var(--line); border-radius: 3px; }
+    .quiz-btn:hover { border-color: var(--blue); }
+    .quiz-btn.correct { color: #fff; background: var(--forest); border-color: var(--forest); }
+    .quiz-btn.incorrect { color: #fff; background: var(--signal); border-color: var(--signal); }
+    .feedback { min-height: 1.8rem; margin-top: 0.75rem; font-weight: 700; }
+
+    .risk-table { width: 100%; margin-top: 1.5rem; border-collapse: collapse; background: var(--surface); }
+    .risk-table th, .risk-table td { padding: 0.8rem; text-align: left; border: 1px solid var(--line); }
+    .risk-table th { color: #fff; background: var(--forest); font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; }
+
+    .takeaways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .takeaway { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.25rem; background: var(--surface); border: 1px solid var(--line); }
+    .takeaway-num { color: var(--signal); font-family: "Source Serif 4", serif; font-size: 2rem; font-weight: 700; line-height: 1; }
+    .resource-list { display: grid; gap: 0.6rem; padding: 0; list-style: none; }
+    .resource-list a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.8rem 1rem; background: var(--surface); border: 1px solid var(--line); text-decoration: none; }
+    .resource-list a:hover { border-color: var(--forest); }
+
+    .concept-frame {
+      counter-increment: teaching-frame;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--forest);
+      box-shadow: var(--shadow);
+    }
+    .regression-figure { display: grid; grid-template-columns: minmax(0, 2fr) minmax(16rem, .8fr); gap: 1.5rem; align-items: center; }
+    .regression-chart { width: 100%; max-height: 430px; background: #fffdf7; border: 1px solid var(--line); }
+    .regression-legend { display: grid; gap: .8rem; }
+    .legend-item { display: grid; grid-template-columns: 1.1rem 1fr; gap: .7rem; align-items: start; }
+    .legend-swatch { width: 1.1rem; height: 1.1rem; margin-top: .2rem; border-radius: 50%; background: var(--forest); }
+    .legend-swatch.line { height: .25rem; margin-top: .65rem; border-radius: 0; background: var(--blue); }
+    .legend-swatch.predicted { background: var(--amber); }
+    .legend-swatch.true { background: var(--signal); }
+    .equation { margin: 1rem 0; padding: 1rem; color: #fff; background: var(--forest); font-family: "IBM Plex Mono", monospace; text-align: center; }
+    .token-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0; }
+    .token { padding: 0.35rem 0.55rem; background: #dce9e3; border: 1px solid #93ad9f; border-radius: 3px; font-family: "IBM Plex Mono", monospace; font-size: 0.76rem; }
+    .token.alert { color: #fff; background: var(--signal); border-color: var(--signal); }
+    .architecture { display: grid; gap: 0.5rem; margin: 1rem 0; }
+    .architecture-row { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding: 0.75rem; background: #eef1ec; border-left: 4px solid var(--forest); }
+    .architecture-row strong { font-family: "IBM Plex Mono", monospace; font-size: 0.76rem; }
+
+    .footer { padding: 2rem; color: #cdd7d2; background: var(--ink); text-align: center; font-size: 0.8rem; }
+    .mobile-menu { display: none; }
+
+    body.deck-mode { height: 100dvh; overflow: hidden; }
+    .deck-mode .rail, .deck-mode main, .deck-mode .footer, .deck-mode .mobile-menu { display: none; }
+    .deck-stage { position: fixed; inset: 4rem 0 0; counter-reset: teaching-frame; background-color: var(--paper); background-image: linear-gradient(rgba(23, 76, 60, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(23, 76, 60, 0.035) 1px, transparent 1px); background-size: 24px 24px; }
+    .deck-slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      overflow-y: auto;
+      padding: 1.25rem 2rem 4.75rem;
+      animation: slide-in 180ms ease-out;
+    }
+    .deck-slide.active { display: grid; align-content: center; }
+    .deck-slide > .deck-content { width: min(1400px, 100%); max-height: 100%; margin: auto; }
+    .deck-slide.deck-title-slide { color: #fff; background: var(--forest); border-bottom: 10px solid var(--amber); }
+    .deck-slide.deck-title-slide::after { content: "f(x) → y"; position: absolute; right: -.03em; bottom: -.22em; color: rgba(255,255,255,.06); font-family: "IBM Plex Mono", monospace; font-size: clamp(7rem, 22vw, 20rem); font-weight: 600; }
+    .deck-slide.deck-title-slide .deck-content { position: relative; z-index: 1; }
+    .deck-slide.deck-title-slide h1 { font-size: clamp(2.6rem, 7vw, 6.2rem); }
+    .deck-slide.deck-title-slide p { max-width: 760px; color: #e0e9e4; font-size: clamp(1rem, 2vw, 1.25rem); }
+    .deck-slide .section-kicker { margin-bottom: .8rem; }
+    .deck-slide h2 { font-size: clamp(2rem, 5vw, 4.5rem); }
+    .deck-slide .deck-context h2 { margin-bottom: 1.4rem; font-size: clamp(1.65rem, 3.5vw, 3rem); }
+    .deck-slide .grid-2, .deck-slide .grid-3, .deck-slide .lab, .deck-slide .quiz, .deck-slide .concept-frame, .deck-slide .score-demo, .deck-slide .timeline, .deck-slide .takeaways { margin-top: 0; }
+    .deck-slide .panel, .deck-slide .lab, .deck-slide .quiz, .deck-slide .concept-frame { font-size: clamp(.92rem, 1.35vw, 1.08rem); }
+    .deck-slide .panel { padding: clamp(1.15rem, 2vw, 1.8rem); }
+    .deck-slide .panel h3, .deck-slide .lab h3, .deck-slide .quiz h3, .deck-slide .concept-frame h3 { font-size: clamp(1.5rem, 3vw, 2.4rem); }
+    .deck-slide .instructor-note { margin-top: 0; }
+    .deck-slide .risk-table { margin-top: 0; font-size: clamp(.72rem, 1.15vw, .95rem); }
+    .deck-slide .timeline-row { padding: .65rem 1rem; }
+    .deck-slide .gauge { width: min(260px, 100%); }
+    .deck-slide .takeaways { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .deck-slide .takeaway { padding: 1.4rem; }
+    .deck-controls {
+      position: fixed;
+      z-index: 60;
+      right: 1rem;
+      bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .45rem;
+      color: #fff;
+      background: rgba(23, 32, 29, .94);
+      border: 1px solid #4f5b56;
+      border-radius: 5px;
+      box-shadow: var(--shadow);
+    }
+    .deck-controls button { display: grid; width: 2.6rem; height: 2.6rem; place-items: center; color: #fff; background: transparent; border: 1px solid #59655f; border-radius: 3px; }
+    .deck-controls button:hover:not(:disabled) { color: var(--ink); background: var(--amber); border-color: var(--amber); }
+    .deck-controls button:disabled { opacity: .35; cursor: default; }
+    .slide-counter { min-width: 5.5rem; text-align: center; font-family: "IBM Plex Mono", monospace; font-size: .78rem; }
+    .deck-help { position: fixed; z-index: 60; left: 1rem; bottom: 1rem; padding: .55rem .75rem; color: var(--muted); background: rgba(255, 253, 247, .92); border: 1px solid var(--line); border-radius: 3px; font-family: "IBM Plex Mono", monospace; font-size: .68rem; }
+    @keyframes slide-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+
+    @media (max-width: 900px) {
+      :root { --rail: 0px; }
+      .rail { transform: translateX(-100%); width: 17rem; transition: transform 180ms ease; }
+      .rail.open { transform: translateX(0); box-shadow: var(--shadow); }
+      .mobile-menu { display: grid; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .score-demo { grid-template-columns: 1fr; }
+      .hero { min-height: calc(100vh - 4rem); }
+    }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 0 0.75rem; }
+      .brand span:last-child { display: none; }
+      .grid-2, .compare, .takeaways, .dga-grid { grid-template-columns: 1fr; }
+      .compare-arrow { transform: rotate(90deg); }
+      .timeline-row { grid-template-columns: 4.5rem 3rem 1fr; gap: 0.5rem; padding: 0.7rem; }
+      .lesson { padding-left: 1rem; padding-right: 1rem; }
+      .hero { padding: 3rem 1.25rem; }
+      .timer-btn { padding-inline: 0.5rem; }
+      .risk-table { display: block; max-width: 100%; overflow-x: auto; }
+      .architecture-row { grid-template-columns: 1fr; gap: 0.35rem; }
+      .deck-slide { padding: 1.5rem 1rem 5.5rem; }
+      .deck-slide.active { align-content: start; }
+      .deck-slide .grid-2, .deck-slide .grid-3, .deck-slide .score-demo { grid-template-columns: 1fr; }
+      .deck-slide .gauge { width: min(190px, 70vw); }
+      .deck-help { display: none; }
+      .deck-controls { right: 50%; transform: translateX(50%); }
+    }
+
+    @media print {
+      .topbar, .rail, .progress, .action-btn, .quiz-options { display: none !important; }
+      main { margin: 0; padding: 0; }
+      .hero { min-height: auto; color: var(--ink); background: #fff; border-bottom: 3px solid var(--ink); }
+      .hero p, .eyebrow { color: var(--ink); }
+      .lesson { min-height: auto; break-inside: avoid; padding: 2rem 1rem; }
+      .panel, .lab { box-shadow: none; }
+      details { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <button class="icon-btn mobile-menu" id="menuButton" aria-label="Open lesson navigation" title="Lesson navigation"><i data-lucide="menu"></i></button>
+      <div class="brand-mark">207</div>
+      <span>Machine Learning in Cybersecurity</span>
+    </div>
+    <div class="top-actions">
+      <a class="icon-btn" href="course-syllabus.html" aria-label="Open course roadmap" title="Course roadmap"><i data-lucide="calendar-range"></i></a>
+      <button class="icon-btn" onclick="window.print()" aria-label="Print instructor guide" title="Print instructor guide"><i data-lucide="printer"></i></button>
+    </div>
+  </header>
+  <div class="progress" id="progress"></div>
+
+  <aside class="rail" id="rail">
+    <p class="rail-label">Week 01</p>
+    <nav aria-label="Lesson sections">
+      <a class="rail-link active" href="#opening"><span class="num">00</span><span class="label">Opening</span></a>
+      <a class="rail-link" href="#objectives"><span class="num">01</span><span class="label">Course map</span></a>
+      <a class="rail-link" href="#evolution"><span class="num">02</span><span class="label">ML to agentic AI</span></a>
+      <a class="rail-link" href="#ml-language"><span class="num">03</span><span class="label">Data, labels, features</span></a>
+      <a class="rail-link" href="#security-old-way"><span class="num">04</span><span class="label">Security before ML</span></a>
+      <a class="rail-link" href="#metamorphic"><span class="num">05</span><span class="label">Metamorphic malware</span></a>
+      <a class="rail-link" href="#dga"><span class="num">06</span><span class="label">DGA challenge</span></a>
+      <a class="rail-link" href="#ml-security"><span class="num">07</span><span class="label">Cybersecurity applications</span></a>
+      <a class="rail-link" href="#splits"><span class="num">08</span><span class="label">Train, validation &amp; test</span></a>
+      <a class="rail-link" href="#regression"><span class="num">09</span><span class="label">Linear regression</span></a>
+      <a class="rail-link" href="#wrap"><span class="num">10</span><span class="label">Synthesis &amp; exit</span></a>
+    </nav>
+  </aside>
+
+  <main>
+    <section class="hero" id="opening" data-section="opening">
+      <div class="eyebrow">CYBER 207 · Week 01 · Introduction &amp; Framing</div>
+      <h1>When signatures stop working</h1>
+      <p>Security is a classification problem with an adversary inside the feedback loop. Today we build the mental model for the entire semester.</p>
+      <div class="hero-meta">
+        <span class="tag">NO PREREQUISITE CODE</span>
+        <span class="tag">CYBER EXAMPLES + LIVE LABS</span>
+      </div>
+    </section>
+
+    <section class="lesson" id="objectives" data-section="objectives">
+      <div class="lesson-inner">
+        <div class="section-kicker">01 · Course map</div>
+        <h2>Frame the course</h2>
+        <p class="lead">Machine learning does not replace security expertise. It turns expert intuition and historical evidence into decisions that can operate at machine scale.</p>
+
+        <ul class="objectives">
+          <li><span><strong>Contrast</strong> signatures, heuristics, and learned decision boundaries.</span></li>
+          <li><span><strong>Explain</strong> why adaptive attackers make security ML fundamentally different from ordinary prediction.</span></li>
+          <li><span><strong>Map</strong> a cyber problem into data, labels, features, predictions, actions, and costs.</span></li>
+          <li><span><strong>Trace</strong> the evolution from rules to ML, deep learning, generative AI, and agentic AI.</span></li>
+          <li><span><strong>Use</strong> a simple linear regression line to predict a continuous value.</span></li>
+        </ul>
+
+        <div class="timeline" aria-label="Lesson journey">
+          <div class="timeline-row"><strong>WHY</strong><span>01</span><div>Why signatures and hand-written rules are necessary but insufficient</div></div>
+          <div class="timeline-row"><strong>WHAT</strong><span>02</span><div>What machine learning learns from examples</div></div>
+          <div class="timeline-row"><strong>WHERE</strong><span>03</span><div>Where ML, deep learning, generative AI, and agents fit in cybersecurity</div></div>
+          <div class="timeline-row"><strong>DATA</strong><span>04</span><div>How features, labels, and dataset partitions shape evidence</div></div>
+          <div class="timeline-row"><strong>MODEL</strong><span>05</span><div>How a fitted line predicts a continuous value</div></div>
+          <div class="timeline-row"><strong>CONNECT</strong><span>06</span><div>How the same idea can estimate numeric cybersecurity outcomes</div></div>
+        </div>
+
+        <details class="instructor-note">
+          <summary>Instructor cue</summary>
+          <p>Open with a show of hands: “Who has written a rule that detected something bad?” Then ask: “How long did that rule remain useful?” Collect two examples before introducing any definition.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="lesson" id="evolution" data-section="evolution">
+      <div class="lesson-inner">
+        <div class="section-kicker">02 · Evolution of intelligent systems</div>
+        <h2>From rules to models that can act</h2>
+        <p class="lead">These approaches are cumulative, not replacements. Mature security programs combine deterministic controls, learned predictions, generative interfaces, and carefully bounded automation.</p>
+        <div class="architecture">
+          <div class="architecture-row"><strong>RULES</strong><span>Experts encode known indicators and policy. Example: block a known malicious hash or impossible network path.</span></div>
+          <div class="architecture-row"><strong>MACHINE LEARNING</strong><span>Models infer patterns from examples. Example: score a login, classify a domain, or predict incident severity.</span></div>
+          <div class="architecture-row"><strong>DEEP LEARNING</strong><span>Neural networks learn representations from email text, executable bytes, malware images, graphs, and event sequences.</span></div>
+          <div class="architecture-row"><strong>GENERATIVE AI</strong><span>Foundation models summarize incidents, explain alerts, retrieve playbook knowledge, and produce queries or reports.</span></div>
+          <div class="architecture-row"><strong>AGENTIC AI</strong><span>A model selects tools and steps toward a goal: enrich an alert, query evidence, draft a case, then request approval.</span></div>
+        </div>
+        <div class="grid-3">
+          <article class="panel"><h3>Predict</h3><p>Is this malicious? Which family? What risk score, incident severity, or containment time should we expect?</p></article>
+          <article class="panel warning"><h3>Generate</h3><p>Summarize evidence, explain a model result, translate an analyst question, or retrieve relevant knowledge.</p></article>
+          <article class="panel accent"><h3>Act</h3><p>Call tools and coordinate workflow with scoped permissions, observable steps, and human approval for consequential actions.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="ml-language" data-section="ml-language">
+      <div class="lesson-inner">
+        <div class="section-kicker">03 · Learning-system vocabulary</div>
+        <h2>The language of a learning system</h2>
+        <p class="lead">Before choosing an algorithm, translate the security decision into examples the machine can observe and outcomes the organization actually cares about.</p>
+        <div class="grid-3">
+          <article class="panel"><h3>Data</h3><p>Raw evidence: email text, DNS requests, process trees, authentication events, packet metadata, analyst cases.</p><p class="small">Ask: what is observable at decision time?</p></article>
+          <article class="panel warning"><h3>Features</h3><p>Measurements derived from data: URL length, failed-login count, parent process, token sequence, embedding vector.</p><p class="small">Ask: what can an attacker manipulate?</p></article>
+          <article class="panel accent"><h3>Labels</h3><p>Desired outcomes: malicious/benign, malware family, incident severity, analyst disposition, time to containment.</p><p class="small">Ask: who created this truth, and when?</p></article>
+        </div>
+        <div class="concept-frame">
+          <h3>One problem, three learning setups</h3>
+          <div class="architecture">
+            <div class="architecture-row"><strong>SUPERVISED</strong><span>Learn from labeled phishing and benign emails to predict a class for a new email.</span></div>
+            <div class="architecture-row"><strong>UNSUPERVISED</strong><span>Cluster email campaigns or find unusual login patterns without reliable labels.</span></div>
+            <div class="architecture-row"><strong>REINFORCEMENT</strong><span>Choose sequential actions from feedback, such as investigation steps or adaptive evasion; powerful and risky in security.</span></div>
+          </div>
+        </div>
+        <div class="lab">
+          <div class="lab-head"><h3>Problem formulation drill</h3></div>
+          <p><strong>Scenario:</strong> reduce account-takeover losses without locking out legitimate travelers.</p>
+          <p>In pairs, write one row: <span class="mono">unit of prediction | available data | label | action | expensive mistake</span>.</p>
+          <p class="small">Sample: login event | device, geo, velocity, history | confirmed takeover within 7 days | step-up auth | missed takeover versus customer lockout.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="security-old-way" data-section="security-old-way">
+      <div class="lesson-inner">
+        <div class="section-kicker">04 · Cybersecurity before ML</div>
+        <h2>The old way still matters</h2>
+        <p class="lead">Traditional controls encode known badness. They are fast, inspectable, and precise. Their weakness is not age; it is brittleness under variation.</p>
+
+        <div class="grid-3">
+          <article class="panel">
+            <i class="panel-icon" data-lucide="scan-search"></i>
+            <h3>Signatures</h3>
+            <p>Match a known byte sequence, hash, string, domain, or behavioral fingerprint.</p>
+            <p class="small"><strong>Strength:</strong> precise and explainable.<br><strong>Failure:</strong> unseen variants.</p>
+          </article>
+          <article class="panel warning">
+            <i class="panel-icon" data-lucide="list-checks"></i>
+            <h3>Heuristics</h3>
+            <p>Apply expert rules such as “PowerShell plus encoded arguments plus a network call.”</p>
+            <p class="small"><strong>Strength:</strong> generalizes modestly.<br><strong>Failure:</strong> maintenance and evasion.</p>
+          </article>
+          <article class="panel accent">
+            <i class="panel-icon" data-lucide="user-round-search"></i>
+            <h3>Human analysis</h3>
+            <p>Combine context, experience, and investigation to decide what happened.</p>
+            <p class="small"><strong>Strength:</strong> flexible reasoning.<br><strong>Failure:</strong> volume and fatigue.</p>
+          </article>
+        </div>
+
+        <div class="compare">
+          <div class="compare-side">
+            <h3>Rule-based detection</h3>
+            <div class="code-block"><span class="key">IF</span> file_hash IN blocklist<br><span class="key">THEN</span> quarantine(file)</div>
+            <p>A crisp decision based on a feature chosen in advance.</p>
+          </div>
+          <div class="compare-arrow"><i data-lucide="arrow-right" aria-hidden="true"></i></div>
+          <div class="compare-side">
+            <h3>Learned detection</h3>
+            <div class="code-block">risk = <span class="key">model</span>(file_features)<br><span class="key">IF</span> risk &gt; threshold: investigate()</div>
+            <p>A score learned from examples, converted into an operational decision.</p>
+          </div>
+        </div>
+
+        <div class="lab">
+          <div class="lab-head"><h3>Think · Pair · Share</h3></div>
+          <p><strong>Prompt:</strong> Your endpoint tool finds a process whose executable no longer exists on disk. Is that malicious?</p>
+          <div class="code-block"><span class="key">SELECT</span> name, path, pid<br><span class="key">FROM</span> processes<br><span class="key">WHERE</span> on_disk = <span class="hot">0</span>;</div>
+          <ol class="task-list">
+            <li>Name one benign explanation and one malicious explanation.</li>
+            <li>What additional evidence would change your confidence?</li>
+            <li>Should the system block, alert, enrich, or ignore?</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="metamorphic" data-section="metamorphic">
+      <div class="lesson-inner">
+        <div class="section-kicker">05 · Adversarial variation</div>
+        <h2>Same behavior. Different bytes.</h2>
+        <p class="lead">Metamorphic malware rewrites its representation while preserving its behavior. A detector that memorizes surface form can lose the attacker after one harmless mutation.</p>
+
+        <div class="flow" aria-label="Metamorphic malware process">
+          <div class="flow-node">malicious intent</div><span class="flow-arrow">→</span>
+          <div class="flow-node">rewrite code</div><span class="flow-arrow">→</span>
+          <div class="flow-node">same semantics</div><span class="flow-arrow">→</span>
+          <div class="flow-node">new signature</div>
+        </div>
+
+        <div class="grid-2">
+          <article class="panel">
+            <h3>Surface features</h3>
+            <p>Hashes, exact strings, byte n-grams, instruction sequences.</p>
+            <p class="small">Cheap to collect; often easy to alter.</p>
+          </article>
+          <article class="panel accent">
+            <h3>Behavioral features</h3>
+            <p>System calls, control flow, persistence actions, network behavior.</p>
+            <p class="small">Harder to collect; closer to attacker intent.</p>
+          </article>
+        </div>
+
+        <div class="lab">
+          <div class="lab-head"><h3>Live lab: break the signature</h3></div>
+          <p>The toy detector looks for one exact instruction sequence. Mutate the sample without changing its final result.</p>
+          <div class="mutation-stage">
+            <div class="sample detected" id="codeSample">MOV EAX, 1<br>ADD EAX, 2<br>CALL connect_c2</div>
+            <div class="mutate-actions">
+              <button class="action-btn" id="nopButton"><i data-lucide="plus"></i> Insert no-op</button>
+              <button class="action-btn" id="swapButton"><i data-lucide="shuffle"></i> Equivalent rewrite</button>
+              <button class="action-btn secondary" id="restoreButton"><i data-lucide="rotate-ccw"></i> Restore</button>
+            </div>
+            <div class="status" id="signatureStatus" aria-live="polite">SIGNATURE MATCH // detected</div>
+          </div>
+          <p class="small">Important: this is a conceptual illustration, not executable malware. Ask students which feature remains invariant across all versions.</p>
+        </div>
+
+        <div class="quiz" data-answer="2">
+          <h3>Knowledge check</h3>
+          <p>Which change best improves robustness against simple metamorphism?</p>
+          <div class="quiz-options">
+            <button class="quiz-btn">Store more whole-file hashes</button>
+            <button class="quiz-btn">Match longer exact byte sequences</button>
+            <button class="quiz-btn">Model behavior that remains stable across rewrites</button>
+            <button class="quiz-btn">Increase the alert volume</button>
+          </div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="dga" data-section="dga">
+      <div class="lesson-inner">
+        <div class="section-kicker">06 · Learning patterns from domains</div>
+        <h2>The rendezvous problem</h2>
+        <p class="lead">A bot and its operator need to find each other. Hard-coding one command-and-control domain makes takedown easy; generating many possible domains changes the defender’s task.</p>
+
+        <div class="grid-2">
+          <article class="panel">
+            <h3>Attacker strategy</h3>
+            <p>Use a shared algorithm and date as a seed to generate hundreds of candidate domains. Register only one.</p>
+          </article>
+          <article class="panel accent">
+            <h3>Defender strategy</h3>
+            <p>Classify domains using lexical patterns, DNS behavior, registration context, and host-level evidence.</p>
+          </article>
+        </div>
+
+        <div class="lab">
+          <div class="lab-head"><h3>Human classifier</h3></div>
+          <p>Select every domain you suspect was algorithmically generated. Then explain your features, not just your answers.</p>
+          <div class="dga-grid" id="dgaGrid">
+            <button class="domain-btn" data-dga="false">security.berkeley.edu</button>
+            <button class="domain-btn" data-dga="true">xj3kq9mva.biz</button>
+            <button class="domain-btn" data-dga="false">cloudfront.net</button>
+            <button class="domain-btn" data-dga="true">mnbvcxzlkj.info</button>
+            <button class="domain-btn" data-dga="false">login.microsoftonline.com</button>
+            <button class="domain-btn" data-dga="true">ajwuehdbqk.ru</button>
+          </div>
+          <div class="status" id="dgaStatus">FEATURE HINT // length, vowels, entropy, n-grams, context</div>
+        </div>
+
+        <details class="instructor-note">
+          <summary>Debrief: expose the shortcut</summary>
+          <p>Humans often equate “unpronounceable” with malicious. That shortcut fails on CDNs, tracking domains, internationalized names, and attacker-generated wordlists. The label must come from operational evidence, not aesthetics alone.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="lesson" id="ml-security" data-section="ml-security">
+      <div class="lesson-inner">
+        <div class="section-kicker">07 · Cybersecurity applications</div>
+        <h2>From telemetry to security outcomes</h2>
+        <p class="lead">A model is one component in a decision system. Cybersecurity value comes from the full path between observable evidence, a prediction, and a responsible action.</p>
+
+        <div class="flow" aria-label="Machine learning security pipeline">
+          <div class="flow-node">telemetry</div><span class="flow-arrow">→</span>
+          <div class="flow-node">features</div><span class="flow-arrow">→</span>
+          <div class="flow-node">score</div><span class="flow-arrow">→</span>
+          <div class="flow-node">threshold</div><span class="flow-arrow">→</span>
+          <div class="flow-node">action</div><span class="flow-arrow">→</span>
+          <div class="flow-node">feedback</div>
+        </div>
+
+        <div class="score-demo">
+          <div>
+            <h3>Live scoring sandbox</h3>
+            <p>Adjust three toy features for a login event. This linear score is deliberately simple so the decision mechanics stay visible.</p>
+            <div class="control">
+              <label for="geoRange"><span>Unusual location</span><output id="geoValue">40</output></label>
+              <input id="geoRange" type="range" min="0" max="100" value="40">
+            </div>
+            <div class="control">
+              <label for="deviceRange"><span>Unknown device</span><output id="deviceValue">30</output></label>
+              <input id="deviceRange" type="range" min="0" max="100" value="30">
+            </div>
+            <div class="control">
+              <label for="velocityRange"><span>Impossible travel</span><output id="velocityValue">60</output></label>
+              <input id="velocityRange" type="range" min="0" max="100" value="60">
+            </div>
+            <div class="code-block">risk = 0.25(location) + 0.30(device) + 0.45(travel)</div>
+          </div>
+          <div class="gauge" id="gauge">
+            <div class="gauge-inner"><span class="gauge-score" id="gaugeScore">47</span><span class="gauge-label" id="gaugeLabel">STEP-UP AUTH</span></div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="panel"><h3>Classification</h3><p>Malware family, phishing/not phishing, account takeover/not takeover.</p></article>
+          <article class="panel warning"><h3>Anomaly detection</h3><p>Find behavior unlike a learned baseline when labels are scarce.</p></article>
+          <article class="panel accent"><h3>Prioritization</h3><p>Rank alerts or vulnerabilities so limited analysts inspect the highest-value cases.</p></article>
+        </div>
+
+        <div class="concept-frame">
+          <h3>One security program, many forms of intelligence</h3>
+          <div class="architecture">
+            <div class="architecture-row"><strong>IDENTITY</strong><span>Score risky sign-ins, detect account takeover, and choose allow, challenge, or block.</span></div>
+            <div class="architecture-row"><strong>ENDPOINT</strong><span>Classify malware, detect unusual process behavior, and group related samples or campaigns.</span></div>
+            <div class="architecture-row"><strong>NETWORK</strong><span>Identify suspicious domains, flows, beaconing, lateral movement, and command-and-control behavior.</span></div>
+            <div class="architecture-row"><strong>SOC</strong><span>Prioritize alerts, retrieve evidence, summarize incidents, recommend playbooks, and automate bounded investigation steps.</span></div>
+          </div>
+        </div>
+
+        <details class="instructor-note">
+          <summary>Instructor cue</summary>
+          <p>Move the threshold verbally: at 30, many users get challenged; at 80, more attacks pass. Ask students to name the cost borne by users, analysts, and the business at each setting.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="lesson" id="splits" data-section="splits">
+      <div class="lesson-inner">
+        <div class="section-kicker">08 · Building trustworthy datasets</div>
+        <h2>Train, validate, test</h2>
+        <p class="lead">A model must be evaluated on examples it did not learn from. The split protects us from confusing memorization, repeated tuning, and leakage with generalization.</p>
+        <table class="risk-table">
+          <thead><tr><th>Partition</th><th>Purpose</th><th>What may influence it?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Training</strong></td><td>Fit coefficients or model parameters.</td><td>The learning algorithm sees features and labels repeatedly.</td></tr>
+            <tr><td><strong>Validation</strong></td><td>Choose features, hyperparameters, and thresholds.</td><td>Human and automated tuning decisions may use its results.</td></tr>
+            <tr><td><strong>Test</strong></td><td>Estimate final performance on unseen data.</td><td>Nothing until the model and decisions are frozen.</td></tr>
+          </tbody>
+        </table>
+        <div class="concept-frame">
+          <h3>Security split: time and entity matter</h3>
+          <div class="equation">train: Jan–Jun → validate: Jul → test: Aug</div>
+          <p>A random row split can leak the same host, campaign, file family, or future knowledge into every partition. Prefer a time-based holdout and group related entities when deployment predicts future events.</p>
+        </div>
+        <div class="grid-3">
+          <article class="panel"><h3>Temporal leakage</h3><p>A feature contains an analyst disposition recorded after the alert. At prediction time, that answer does not exist.</p></article>
+          <article class="panel warning"><h3>Entity leakage</h3><p>Variants of one malware family or events from one host appear in both training and test partitions.</p></article>
+          <article class="panel accent"><h3>Selection leakage</h3><p>The test set is checked repeatedly until a favorable model, feature set, or threshold is found.</p></article>
+        </div>
+        <div class="quiz" data-answer="2">
+          <h3>Leakage check</h3>
+          <p>You tune a detection threshold after checking test-set results five times. What happened?</p>
+          <div class="quiz-options">
+            <button class="quiz-btn">Nothing; test data is designed for tuning</button>
+            <button class="quiz-btn">The training set became too small</button>
+            <button class="quiz-btn">The test set became part of model selection and is no longer an unbiased final check</button>
+            <button class="quiz-btn">The labels automatically became imbalanced</button>
+          </div>
+          <div class="feedback" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="regression" data-section="regression">
+      <div class="lesson-inner">
+        <div class="section-kicker">09 · A first predictive model</div>
+        <h2>Linear regression: predict a house price</h2>
+        <p class="lead">Larger houses often cost more. Linear regression draws a straight line through past sales and uses that line to estimate the price of a new house.</p>
+        <div class="concept-frame">
+          <h3>What goes into the model?</h3>
+          <div class="equation">house size → fitted line → predicted price</div>
+          <p><strong>Feature:</strong> square feet. <strong>Target:</strong> sale price. Each dot in the training data represents one house that was sold.</p>
+        </div>
+        <div class="grid-3">
+          <article class="panel"><h3>1 · Find the size</h3><p>Start with a new 1,500-square-foot house on the horizontal axis.</p></article>
+          <article class="panel warning"><h3>2 · Meet the line</h3><p>Move up from 1,500 until you reach the fitted line.</p></article>
+          <article class="panel accent"><h3>3 · Read the price</h3><p>The height of the line is the predicted price: <strong>$350,000</strong>.</p></article>
+        </div>
+        <div class="concept-frame">
+          <h3>See the prediction and the true value</h3>
+          <div class="regression-figure">
+            <svg class="regression-chart" viewBox="0 0 760 430" role="img" aria-labelledby="regressionChartTitle regressionChartDescription">
+              <title id="regressionChartTitle">Housing-price linear regression example</title>
+              <desc id="regressionChartDescription">Past house sales appear as green points. A blue fitted line predicts 350 thousand dollars for a 1500 square foot house. Its true sale price is 380 thousand dollars, shown 30 thousand dollars above the prediction.</desc>
+              <rect width="760" height="430" fill="#fffdf7"/>
+              <g stroke="#d9ddd8" stroke-width="1">
+                <line x1="90" y1="330" x2="710" y2="330"/><line x1="90" y1="255" x2="710" y2="255"/><line x1="90" y1="180" x2="710" y2="180"/><line x1="90" y1="105" x2="710" y2="105"/>
+                <line x1="205" y1="45" x2="205" y2="355"/><line x1="360" y1="45" x2="360" y2="355"/><line x1="515" y1="45" x2="515" y2="355"/><line x1="670" y1="45" x2="670" y2="355"/>
+              </g>
+              <g stroke="#17201d" stroke-width="2"><line x1="90" y1="355" x2="710" y2="355"/><line x1="90" y1="355" x2="90" y2="45"/></g>
+              <g fill="#58645f" font-family="Manrope, sans-serif" font-size="15">
+                <text x="66" y="335">$200k</text><text x="66" y="260">$300k</text><text x="66" y="185">$400k</text><text x="66" y="110">$500k</text>
+                <text x="185" y="383">500</text><text x="333" y="383">1,000</text><text x="487" y="383">1,500</text><text x="643" y="383">2,000</text>
+                <text x="325" y="417" font-weight="700">House size (square feet)</text>
+                <text transform="translate(22 285) rotate(-90)" font-weight="700">Sale price</text>
+              </g>
+              <line x1="231" y1="355" x2="690" y2="133" stroke="#2166a5" stroke-width="5"/>
+              <g fill="#174c3c" stroke="#fffdf7" stroke-width="3">
+                <circle cx="205" cy="305" r="8"/><circle cx="285" cy="278" r="8"/><circle cx="360" cy="233" r="8"/><circle cx="425" cy="220" r="8"/><circle cx="515" cy="195" r="8"/><circle cx="585" cy="128" r="8"/><circle cx="670" cy="82" r="8"/>
+              </g>
+              <line x1="515" y1="355" x2="515" y2="218" stroke="#58645f" stroke-width="2" stroke-dasharray="7 7"/>
+              <circle cx="515" cy="218" r="11" fill="#e4a11b" stroke="#fffdf7" stroke-width="4"/>
+              <circle cx="515" cy="195" r="13" fill="none" stroke="#e5482f" stroke-width="4"/>
+              <line x1="548" y1="218" x2="548" y2="195" stroke="#e5482f" stroke-width="4"/>
+              <path d="M540 203 L548 195 L556 203 M540 210 L548 218 L556 210" fill="none" stroke="#e5482f" stroke-width="3"/>
+              <g font-family="Manrope, sans-serif" font-size="16" font-weight="700">
+                <text x="565" y="191" fill="#e5482f">True: $380k</text>
+                <text x="565" y="225" fill="#9a6810">Predicted: $350k</text>
+                <text x="565" y="208" fill="#e5482f" font-size="14">distance: $30k</text>
+                <text x="180" y="72" fill="#2166a5">Fitted line</text>
+              </g>
+            </svg>
+            <div class="regression-legend">
+              <div class="legend-item"><span class="legend-swatch"></span><p><strong>Past sales</strong><br>Examples used to fit the line.</p></div>
+              <div class="legend-item"><span class="legend-swatch line"></span><p><strong>Fitted line</strong><br>The model's general pattern.</p></div>
+              <div class="legend-item"><span class="legend-swatch predicted"></span><p><strong>Predicted value</strong><br>The line says $350,000.</p></div>
+              <div class="legend-item"><span class="legend-swatch true"></span><p><strong>True value</strong><br>The house sold for $380,000.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="lab">
+          <div class="lab-head"><h3>Try two predictions</h3></div>
+          <p>Use this simple line: <span class="mono">predicted price = $50,000 + $200 × square feet</span></p>
+          <ol class="task-list"><li>What is the predicted price for 1,000 square feet?</li><li>What is the predicted price for 2,000 square feet?</li><li>What important information besides size could affect the real price?</li></ol>
+        </div>
+        <div class="concept-frame">
+          <h3>How close was the prediction?</h3>
+          <div class="equation">distance = actual price − predicted price</div>
+          <p>If the house sold for $380,000 and the line predicted $350,000, the point is $30,000 above the line. That vertical distance shows how far the prediction was from the actual value.</p>
+          <p>The model predicts the value <strong>on the line</strong> for that house size. It does not simply copy the price of the nearest house.</p>
+        </div>
+        <div class="concept-frame">
+          <h3>Same idea, cybersecurity target</h3>
+          <p>Instead of house price, we might predict a numeric security outcome such as hours to contain an incident. The inputs could include alert backlog and incident severity. We still train on past examples and test whether predictions are close on new examples.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lesson" id="wrap" data-section="wrap">
+      <div class="lesson-inner">
+        <div class="section-kicker">10 · Synthesis</div>
+        <h2>Four ideas to carry forward</h2>
+        <div class="takeaways">
+          <div class="takeaway"><span class="takeaway-num">1</span><div><h3>Behavior beats appearance</h3><p>Robust signals are tied to what an attacker must accomplish, not merely how one sample looks.</p></div></div>
+          <div class="takeaway"><span class="takeaway-num">2</span><div><h3>A score is not an action</h3><p>Thresholds, workflows, and response costs turn predictions into security outcomes.</p></div></div>
+          <div class="takeaway"><span class="takeaway-num">3</span><div><h3>Keep the test set untouched</h3><p>Training fits; validation selects; testing estimates final generalization.</p></div></div>
+          <div class="takeaway"><span class="takeaway-num">4</span><div><h3>Regression predicts a value on a line</h3><p>Vertical distance shows how far an actual value is from its prediction.</p></div></div>
+        </div>
+
+        <div class="lab">
+          <div class="lab-head"><h3>Exit ticket</h3></div>
+          <ol class="task-list">
+            <li>Name one cybersecurity decision that could benefit from a learned score.</li>
+            <li>Identify its data, label, prediction, action, and most expensive error.</li>
+            <li>Choose a split strategy and write a simple linear baseline for the target.</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">CYBER 207 · Week 01 · Introduction &amp; Framing · Instructor teaching page</footer>
+
+  <div class="deck-controls" id="deckControls" hidden>
+    <button id="previousSlide" aria-label="Previous slide" title="Previous slide"><i data-lucide="chevron-left"></i></button>
+    <span class="slide-counter" id="slideCounter">01 / 01</span>
+    <button id="nextSlide" aria-label="Next slide" title="Next slide"><i data-lucide="chevron-right"></i></button>
+    <button id="fullscreenButton" aria-label="Enter fullscreen" title="Enter fullscreen"><i data-lucide="maximize"></i></button>
+  </div>
+  <div class="deck-help" id="deckHelp" hidden>← → navigate · F fullscreen · Home/End jump</div>
+
+  <script>
+    const sourceMain = document.querySelector('main');
+    const deckStage = document.createElement('div');
+    deckStage.className = 'deck-stage';
+    deckStage.setAttribute('aria-live', 'polite');
+    const deckSlides = [];
+
+    const createSlide = (content, className = '') => {
+      const slide = document.createElement('section');
+      slide.className = `deck-slide ${className}`.trim();
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'slide');
+      const wrapper = document.createElement('div');
+      wrapper.className = 'deck-content';
+      if (Array.isArray(content)) content.forEach(node => wrapper.append(node));
+      else wrapper.append(content);
+      slide.append(wrapper);
+      deckStage.append(slide);
+      deckSlides.push(slide);
+    };
+
+    const makeContext = (kicker, heading, includeLead = false, lead = null) => {
+      const context = document.createElement('div');
+      context.className = 'deck-context';
+      if (kicker) context.append(kicker.cloneNode(true));
+      if (heading) context.append(heading.cloneNode(true));
+      if (includeLead && lead) context.append(lead.cloneNode(true));
+      return context;
+    };
+
+    const hero = sourceMain.querySelector('.hero');
+    const heroContent = document.createElement('div');
+    [...hero.children].forEach(child => heroContent.append(child));
+    heroContent.querySelector('h1')?.setAttribute('id', 'opening');
+    createSlide([...heroContent.children], 'deck-title-slide');
+
+    sourceMain.querySelectorAll('.lesson').forEach(lesson => {
+      const inner = lesson.querySelector('.lesson-inner');
+      const kicker = inner.querySelector(':scope > .section-kicker');
+      const heading = inner.querySelector(':scope > h2');
+      const lead = inner.querySelector(':scope > .lead');
+      const blocks = [...inner.children].filter(node => node !== kicker && node !== heading && node !== lead);
+      blocks.forEach((block, blockIndex) => {
+        const context = makeContext(kicker, heading, blockIndex === 0, lead);
+        if (blockIndex === 0) context.id = lesson.id;
+        if (block.classList.contains('timeline')) {
+          const rows = [...block.children];
+          for (let index = 0; index < rows.length; index += 6) {
+            const timeline = block.cloneNode(false);
+            rows.slice(index, index + 6).forEach(row => timeline.append(row));
+            createSlide([index === 0 ? context : makeContext(kicker, heading), timeline]);
+          }
+          return;
+        }
+        if ((block.classList.contains('grid-2') || block.classList.contains('grid-3')) && block.querySelector('.panel')) {
+          createSlide([context, block]);
+          return;
+        }
+        if (block.classList.contains('takeaways')) {
+          createSlide([context, block]);
+          return;
+        }
+        createSlide([context, block]);
+      });
+    });
+
+    sourceMain.remove();
+    document.body.insertBefore(deckStage, document.querySelector('.footer'));
+    document.body.classList.add('deck-mode');
+
+    const deckControls = document.getElementById('deckControls');
+    const deckHelp = document.getElementById('deckHelp');
+    const previousSlide = document.getElementById('previousSlide');
+    const nextSlide = document.getElementById('nextSlide');
+    const slideCounter = document.getElementById('slideCounter');
+    let currentSlide = Math.max(0, Math.min(deckSlides.length - 1, Number(location.hash.replace('#slide-', '')) - 1 || 0));
+
+    const showSlide = index => {
+      currentSlide = Math.max(0, Math.min(deckSlides.length - 1, index));
+      deckSlides.forEach((slide, slideIndex) => {
+        const active = slideIndex === currentSlide;
+        slide.classList.toggle('active', active);
+        slide.setAttribute('aria-hidden', String(!active));
+        if (active) slide.scrollTop = 0;
+      });
+      const digits = String(deckSlides.length).length;
+      slideCounter.textContent = `${String(currentSlide + 1).padStart(digits, '0')} / ${deckSlides.length}`;
+      previousSlide.disabled = currentSlide === 0;
+      nextSlide.disabled = currentSlide === deckSlides.length - 1;
+      progress.style.width = `${((currentSlide + 1) / deckSlides.length) * 100}%`;
+      history.replaceState(null, '', `#slide-${currentSlide + 1}`);
+    };
+
+    deckControls.hidden = false;
+    deckHelp.hidden = false;
+    previousSlide.addEventListener('click', () => showSlide(currentSlide - 1));
+    nextSlide.addEventListener('click', () => showSlide(currentSlide + 1));
+    document.getElementById('fullscreenButton').addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    });
+
+    lucide.createIcons();
+
+    const rail = document.getElementById('rail');
+    document.getElementById('menuButton').addEventListener('click', () => rail.classList.toggle('open'));
+    document.querySelectorAll('.rail-link').forEach(link => link.addEventListener('click', () => rail.classList.remove('open')));
+
+    const progress = document.getElementById('progress');
+    const updateProgress = () => {};
+
+    const sections = document.querySelectorAll('[data-section]');
+    const links = document.querySelectorAll('.rail-link');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
+      });
+    }, { rootMargin: '-25% 0px -60% 0px' });
+    sections.forEach(section => observer.observe(section));
+
+    const codeSample = document.getElementById('codeSample');
+    const signatureStatus = document.getElementById('signatureStatus');
+    const setEvaded = (html) => {
+      codeSample.innerHTML = html;
+      codeSample.className = 'sample evaded';
+      signatureStatus.textContent = 'SIGNATURE MISS // behavior unchanged';
+    };
+    document.getElementById('nopButton').addEventListener('click', () => setEvaded('MOV EAX, 1<br><span style="color:#f4cc72">NOP</span><br>ADD EAX, 2<br>CALL connect_c2'));
+    document.getElementById('swapButton').addEventListener('click', () => setEvaded('XOR EAX, EAX<br>INC EAX<br>ADD EAX, 2<br>CALL connect_c2'));
+    document.getElementById('restoreButton').addEventListener('click', () => {
+      codeSample.innerHTML = 'MOV EAX, 1<br>ADD EAX, 2<br>CALL connect_c2';
+      codeSample.className = 'sample detected';
+      signatureStatus.textContent = 'SIGNATURE MATCH // detected';
+    });
+
+    let dgaCorrect = 0;
+    document.querySelectorAll('.domain-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.dataset.answered) return;
+        button.dataset.answered = 'true';
+        const isDga = button.dataset.dga === 'true';
+        button.classList.add(isDga ? 'correct' : 'incorrect');
+        if (isDga) dgaCorrect += 1;
+        document.getElementById('dgaStatus').textContent = isDga
+          ? `LIKELY DGA // ${dgaCorrect} of 3 toy examples found`
+          : 'LIKELY BENIGN // lexical weirdness alone is not ground truth';
+      });
+    });
+
+    const ranges = ['geo', 'device', 'velocity'];
+    const updateScore = () => {
+      const geo = Number(document.getElementById('geoRange').value);
+      const device = Number(document.getElementById('deviceRange').value);
+      const velocity = Number(document.getElementById('velocityRange').value);
+      ranges.forEach(name => document.getElementById(`${name}Value`).textContent = document.getElementById(`${name}Range`).value);
+      const score = Math.round(geo * 0.25 + device * 0.30 + velocity * 0.45);
+      document.getElementById('gaugeScore').textContent = score;
+      const label = score < 30 ? 'ALLOW' : score < 65 ? 'STEP-UP AUTH' : 'BLOCK + REVIEW';
+      document.getElementById('gaugeLabel').textContent = label;
+      const color = score < 30 ? '#236c54' : score < 65 ? '#e4a11b' : '#e5482f';
+      document.getElementById('gauge').style.borderColor = color;
+    };
+    ranges.forEach(name => document.getElementById(`${name}Range`).addEventListener('input', updateScore));
+    updateScore();
+
+    document.querySelectorAll('.quiz').forEach(quiz => {
+      const correctIndex = Number(quiz.dataset.answer);
+      const options = quiz.querySelectorAll('.quiz-btn');
+      const feedback = quiz.querySelector('.feedback');
+      options.forEach((button, index) => button.addEventListener('click', () => {
+        options.forEach(option => option.disabled = true);
+        button.classList.add(index === correctIndex ? 'correct' : 'incorrect');
+        options[correctIndex].classList.add('correct');
+        feedback.textContent = index === correctIndex ? 'Correct. Focus on stable behavior and operational outcomes.' : 'Not quite. Trace the detector back to what remains invariant and what the decision costs.';
+      }));
+    });
+
+    document.addEventListener('keydown', event => {
+      const usingInteractiveControl = ['INPUT', 'BUTTON'].includes(document.activeElement.tagName) && !document.activeElement.closest('#deckControls');
+      if (usingInteractiveControl) return;
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); showSlide(currentSlide + 1); }
+      if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(event.key)) { event.preventDefault(); showSlide(currentSlide - 1); }
+      if (event.key === 'Home') { event.preventDefault(); showSlide(0); }
+      if (event.key === 'End') { event.preventDefault(); showSlide(deckSlides.length - 1); }
+      if (event.key.toLowerCase() === 'f') document.getElementById('fullscreenButton').click();
+    });
+
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>
