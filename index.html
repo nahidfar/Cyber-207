@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="CYBER 207 course slides and notebooks for machine learning in cybersecurity.">
+  <title>CYBER 207 · Course Materials</title>
+  <style>
+    :root{--ink:#17201d;--muted:#58645f;--paper:#f4f1e8;--surface:#fffdf7;--line:#c9cec8;--forest:#174c3c;--forest2:#236c54;--signal:#e5482f;--amber:#e4a11b;--shadow:0 12px 35px rgba(23,32,29,.1)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--paper);font-family:Inter,Manrope,system-ui,sans-serif;line-height:1.55}a{color:inherit}.hero{padding:clamp(3rem,8vw,7rem) clamp(1rem,7vw,6rem);color:#fff;background:var(--forest);border-bottom:9px solid var(--amber)}.hero-inner,main{width:min(1180px,100%);margin:auto}.eyebrow{color:#d7e3dd;font-size:.78rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.hero h1{max-width:900px;margin:.25em 0;font:700 clamp(2.7rem,7vw,6.5rem)/.98 Georgia,serif;letter-spacing:-.04em}.hero p{max-width:740px;color:#e2ebe6;font-size:clamp(1.05rem,2vw,1.35rem)}main{padding:3rem 1rem 6rem}.section-head{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:3rem 0 1rem;border-bottom:2px solid var(--ink)}h2{margin:0 0 .4rem;font:700 clamp(1.8rem,4vw,3rem)/1.1 Georgia,serif}.section-head p{margin:0 0 .55rem;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}.card{display:flex;min-height:190px;flex-direction:column;padding:1.25rem;background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--forest);box-shadow:var(--shadow);text-decoration:none;transition:transform .15s,border-color .15s}.card:hover{transform:translateY(-3px);border-color:var(--signal)}.card .week{color:var(--signal);font-size:.72rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.card h3{margin:.5rem 0;font:700 1.3rem/1.2 Georgia,serif}.card p{margin:0;color:var(--muted);font-size:.92rem}.card .open{margin-top:auto;padding-top:1rem;color:var(--forest2);font-weight:800}.featured{border-top-color:var(--amber)}.resources{display:grid;gap:.65rem}.resource{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem;background:var(--surface);border:1px solid var(--line);text-decoration:none}.resource:hover{border-color:var(--forest)}.resource span:last-child{color:var(--forest2);font-weight:800}.note{margin-top:2rem;padding:1rem 1.2rem;color:#dce8e2;background:var(--ink);border-left:5px solid var(--amber)}footer{padding:2rem;text-align:center;color:#cdd7d2;background:var(--ink);font-size:.82rem}@media(max-width:650px){.section-head,.resource{align-items:start;flex-direction:column}.hero{padding-top:4rem}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">CYBER 207 · Machine Learning in Cybersecurity</div>
+      <h1>Slides, labs, and teaching materials</h1>
+      <p>Interactive browser lessons and executable notebooks for learning how machine-learning algorithms work in defensive-security settings.</p>
+    </div>
+  </header>
+  <main>
+    <div class="section-head"><h2>Interactive topic lessons</h2><p>Focused, classroom-ready deep dives</p></div>
+    <section class="grid" aria-label="Interactive topic lessons">
+      <a class="card featured" href="week-01-introduction-framing.html#slide-1"><span class="week">Week 01</span><h3>Introduction &amp; Framing</h3><p>Security ML, data, labels, splits, and operational decision-making.</p><span class="open">Open lesson →</span></a>
+      <a class="card featured" href="slides/week-01-linear-regression-gradient-descent.html#1"><span class="week">Week 01 · Deep dive</span><h3>Regression &amp; Gradient Descent</h3><p>Loss, residuals, gradients, learning rates, scaling, and regularization.</p><span class="open">Open lesson →</span></a>
+      <a class="card featured" href="week-02-knn.html#1"><span class="week">Week 02 · Deep dive</span><h3>k-Nearest Neighbors</h3><p>Distance, scaling, neighborhood voting, model selection, and failure modes.</p><span class="open">Open lesson →</span></a>
+      <a class="card featured" href="week-02-decision-trees-bagging-boosting.html#1"><span class="week">Week 02 · Deep dive</span><h3>Trees, Bagging &amp; Boosting</h3><p>Greedy splits, impurity, pruning, random forests, and sequential correction.</p><span class="open">Open lesson →</span></a>
+    </section>
+
+    <div class="section-head"><h2>Complete weekly slide series</h2><p>Fourteen browser-based course decks</p></div>
+    <section class="grid" aria-label="Weekly slides">
+      <a class="card" href="slides/week-01-ml-framing-splits-linear-regression.html"><span class="week">Week 01</span><h3>ML Framing, Splits &amp; Linear Regression</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-02-knn-trees-ensembles.html"><span class="week">Week 02</span><h3>KNN, Trees &amp; Ensembles</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-03-security-feature-engineering-project-1.html"><span class="week">Week 03</span><h3>Security Feature Engineering</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-04-logistic-regression-probabilistic-decisions.html"><span class="week">Week 04</span><h3>Logistic Regression &amp; Probabilistic Decisions</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-05-multiclass-classification-metrics.html"><span class="week">Week 05</span><h3>Multiclass Classification &amp; Metrics</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-06-kmeans-pca-project-2.html"><span class="week">Week 06</span><h3>K-Means &amp; PCA</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-07-classical-ml-integration-midterm-review.html"><span class="week">Week 07</span><h3>Classical ML Integration</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-08-midterm-review-final-project-framing.html"><span class="week">Week 08</span><h3>Midterm &amp; Project Framing</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-09-feedforward-neural-networks-training.html"><span class="week">Week 09</span><h3>Feedforward Neural Networks</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-10-convolutional-neural-networks.html"><span class="week">Week 10</span><h3>Convolutional Neural Networks</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-11-rnns-lstms-sequence-embeddings-project-3.html"><span class="week">Week 11</span><h3>RNNs, LSTMs &amp; Embeddings</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-12-transformers-llm-foundations.html"><span class="week">Week 12</span><h3>Transformers &amp; LLM Foundations</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-13-rag-finetuning-llm-evaluation-project-4.html"><span class="week">Week 13</span><h3>RAG, Fine-Tuning &amp; Evaluation</h3><span class="open">Open slides →</span></a>
+      <a class="card" href="slides/week-14-final-project-presentations.html"><span class="week">Week 14</span><h3>Final Project Presentations</h3><span class="open">Open slides →</span></a>
+    </section>
+
+    <div class="section-head"><h2>Executable notebooks</h2><p>Open on GitHub or download to run locally</p></div>
+    <section class="resources" aria-label="Course notebooks">
+      <a class="resource" href="https://github.com/nahidfar/Cyber-207/blob/main/notebooks/linear-regression-gradient-descent.ipynb"><strong>Linear Regression &amp; Gradient Descent</strong><span>Open notebook →</span></a>
+      <a class="resource" href="https://github.com/nahidfar/Cyber-207/blob/main/notebooks/knn.ipynb"><strong>k-Nearest Neighbors</strong><span>Open notebook →</span></a>
+      <a class="resource" href="https://github.com/nahidfar/Cyber-207/blob/main/notebooks/week-02-trees-bagging-boosting.ipynb"><strong>Trees, Bagging &amp; Boosting</strong><span>Open notebook →</span></a>
+    </section>
+
+    <div class="note"><strong>Instructor assets:</strong> PowerPoint exports and editable Markdown sources are available in the repository’s <a href="https://github.com/nahidfar/Cyber-207/tree/main/slides">slides directory</a>.</div>
+  </main>
+  <footer>CYBER 207 · Machine Learning &amp; Deep Learning for Cybersecurity</footer>
+</body>
+</html>

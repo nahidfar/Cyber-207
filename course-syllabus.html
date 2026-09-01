@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Modernized 14-week CYBER 207 syllabus for machine learning, LLMs, and agents in cybersecurity.">
+  <title>CYBER 207 | Modern Course Roadmap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root { --ink:#17201d; --muted:#5b6862; --paper:#f4f1e8; --surface:#fffdf7; --line:#cbd0ca; --forest:#174c3c; --green:#236c54; --signal:#e5482f; --amber:#e4a11b; --blue:#2166a5; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background-color:var(--paper); background-image:linear-gradient(rgba(23,76,60,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(23,76,60,.035) 1px,transparent 1px); background-size:24px 24px; font-family:Manrope,sans-serif; line-height:1.55; letter-spacing:0; }
+    h1,h2,h3 { margin-top:0; font-family:"Source Serif 4",serif; line-height:1.1; letter-spacing:0; }
+    h1 { max-width:900px; margin-bottom:1rem; font-size:clamp(2.6rem,7vw,6rem); }
+    h2 { font-size:clamp(2rem,4vw,3.3rem); }
+    h3 { margin-bottom:.45rem; font-size:1.3rem; }
+    p { margin:0 0 1rem; }
+    a { color:var(--green); text-underline-offset:3px; }
+    .mono { font-family:"IBM Plex Mono",monospace; }
+    header { min-height:70vh; display:grid; align-content:center; padding:clamp(4rem,9vw,9rem); color:#fff; background:var(--forest); border-bottom:10px solid var(--amber); position:relative; overflow:hidden; }
+    header::after { content:"207"; position:absolute; right:-.05em; bottom:-.35em; color:rgba(255,255,255,.055); font-family:"IBM Plex Mono",monospace; font-size:clamp(14rem,32vw,32rem); font-weight:700; }
+    header p { max-width:760px; color:#dce7e1; font-size:1.12rem; }
+    .eyebrow { color:#bcd0c6; font-family:"IBM Plex Mono",monospace; font-size:.78rem; text-transform:uppercase; }
+    .header-actions { display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.5rem; }
+    .button { display:inline-flex; align-items:center; gap:.5rem; min-height:2.8rem; padding:.6rem .9rem; color:#fff; background:transparent; border:1px solid #83a494; border-radius:3px; text-decoration:none; font-weight:700; }
+    .button.primary { color:var(--ink); background:var(--amber); border-color:var(--amber); }
+    nav { position:sticky; top:0; z-index:20; display:flex; gap:.5rem; overflow-x:auto; padding:.75rem max(1rem,calc((100% - 1180px)/2)); background:var(--ink); }
+    nav a { flex:0 0 auto; padding:.45rem .7rem; color:#dce7e1; border:1px solid #4d5c56; border-radius:3px; font-size:.78rem; text-decoration:none; }
+    nav a:hover { color:var(--ink); background:var(--amber); border-color:var(--amber); }
+    main { max-width:1180px; margin:auto; padding:5rem 1rem; }
+    section { margin-bottom:7rem; scroll-margin-top:5rem; }
+    .lead { max-width:850px; color:#35423d; font-family:"Source Serif 4",serif; font-size:clamp(1.15rem,2.2vw,1.55rem); }
+    .principles { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; margin-top:2rem; }
+    .principle { padding:1.2rem; background:var(--surface); border:1px solid var(--line); border-top:4px solid var(--forest); }
+    .principle i { margin-bottom:.65rem; color:var(--signal); }
+    .course-map { display:grid; border:1px solid var(--line); background:var(--surface); }
+    .week { display:grid; grid-template-columns:5rem minmax(190px,.8fr) minmax(300px,1.6fr) minmax(200px,.8fr); border-bottom:1px solid var(--line); }
+    .week:last-child { border-bottom:0; }
+    .week > div { padding:1rem; border-right:1px solid var(--line); }
+    .week > div:last-child { border-right:0; }
+    .week.header-row { color:#fff; background:var(--forest); font-family:"IBM Plex Mono",monospace; font-size:.72rem; font-weight:600; text-transform:uppercase; }
+    .week-num { color:var(--signal); font-family:"IBM Plex Mono",monospace; font-weight:700; }
+    .week-title { font-family:"Source Serif 4",serif; font-size:1.12rem; font-weight:700; line-height:1.25; }
+    .topic-list { margin:0; padding-left:1.1rem; }
+    .topic-list li { margin:.25rem 0; }
+    .deliverable { color:var(--muted); font-size:.84rem; }
+    .project { display:inline-block; margin-top:.4rem; padding:.2rem .4rem; color:#fff; background:var(--signal); font-family:"IBM Plex Mono",monospace; font-size:.65rem; }
+    .chapter { margin-top:2rem; padding:2rem; background:var(--surface); border:1px solid var(--line); border-left:7px solid var(--forest); box-shadow:0 8px 24px rgba(23,32,29,.07); }
+    .chapter-head { display:grid; grid-template-columns:5rem 1fr; gap:1rem; align-items:start; }
+    .chapter-num { color:var(--signal); font-family:"IBM Plex Mono",monospace; font-size:2rem; font-weight:700; }
+    .chapter-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin-top:1.5rem; }
+    .chapter-grid article { padding:1rem; background:#edf0ea; border-top:3px solid var(--amber); }
+    .chapter-grid p { margin:0; font-size:.88rem; }
+    .sequence { display:flex; flex-wrap:wrap; align-items:center; gap:.45rem; margin:1.5rem 0; }
+    .node { padding:.55rem .7rem; background:var(--forest); color:#fff; border-radius:3px; font-family:"IBM Plex Mono",monospace; font-size:.72rem; }
+    .arrow { color:var(--signal); font-weight:700; }
+    .example { margin-top:1.25rem; padding:1rem; background:#12221d; color:#d9e8e1; border-left:5px solid var(--amber); font-family:"IBM Plex Mono",monospace; font-size:.8rem; }
+    .assessment-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+    .assessment { padding:1.25rem; background:var(--surface); border:1px solid var(--line); }
+    .assessment strong { float:right; color:var(--signal); font-family:"IBM Plex Mono",monospace; }
+    .reading-list { display:grid; gap:.6rem; padding:0; list-style:none; }
+    .reading-list li { padding:.8rem 1rem; background:var(--surface); border:1px solid var(--line); }
+    footer { padding:2rem; color:#cbd6d0; background:var(--ink); text-align:center; font-size:.8rem; }
+    @media (max-width:900px) { .principles,.chapter-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .week { grid-template-columns:4rem 1fr; } .week > div:nth-child(3),.week > div:nth-child(4) { grid-column:1/-1; border-top:1px solid var(--line); } .week.header-row { display:none; } }
+    @media (max-width:620px) { header { min-height:80vh; padding:4rem 1.2rem; } .principles,.chapter-grid,.assessment-grid { grid-template-columns:1fr; } .chapter { padding:1.2rem; } .chapter-head { grid-template-columns:1fr; gap:.25rem; } .architecture-row { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">CYBER 207 · Revised 14-week syllabus</div>
+    <h1>Machine Learning &amp; Deep Learning for Cybersecurity</h1>
+    <p>A methods course spanning classical machine learning, deep learning, text representations, and two concluding sessions on LLM application fundamentals.</p>
+    <div class="header-actions">
+      <a class="button primary" href="#semester"><i data-lucide="calendar-range"></i> View redesigned course</a>
+      <a class="button" href="#semester"><i data-lucide="calendar-range"></i> View semester</a>
+      <a class="button" href="#phases"><i data-lucide="blocks"></i> Course phases</a>
+    </div>
+  </header>
+
+  <nav aria-label="Course page navigation">
+    <a href="#design">Course design</a><a href="#semester">14-week plan</a><a href="#phases">Course phases</a><a href="#projects">Projects</a><a href="#assessment">Assessment</a><a href="#readings">Readings</a>
+  </nav>
+
+  <main>
+    <section id="design">
+      <h2>What the revision fixes</h2>
+      <p class="lead">CYBER 207 remains the modeling course: six weeks of classical ML, a pre-midterm integration lab, a midterm, three focused weeks of deep learning, and two LLM sessions. CYBER 290 remains the AI security course, avoiding repeated coverage of prompt attacks, AI red teaming, secure deployment, governance, and agent security.</p>
+      <div class="principles">
+        <article class="principle"><i data-lucide="sigma"></i><h3>Methods before systems</h3><p>Regression, classification, trees, features, metrics, clustering, and dimensionality reduction receive dedicated treatment.</p></article>
+        <article class="principle"><i data-lucide="shield"></i><h3>Security throughout</h3><p>Every method is taught through a cyber decision, threat model, and operational cost.</p></article>
+        <article class="principle"><i data-lucide="bot"></i><h3>Two LLM sessions</h3><p>Transformers, prompting, RAG, fine-tuning, and evaluation, without duplicating AI security material from CYBER 290.</p></article>
+        <article class="principle"><i data-lucide="scale"></i><h3>Evidence over fluency</h3><p>Students measure task outcomes, failure modes, and harm rather than aesthetic output.</p></article>
+      </div>
+    </section>
+
+    <section id="semester">
+      <h2>The 14-week teaching sequence</h2>
+      <p class="lead">This sequence stays close to the original agenda. Every 90-minute class combines explanation, a worked cybersecurity example, a short exercise, and interpretation of results.</p>
+      <div class="course-map">
+        <div class="week header-row"><div>Week</div><div>Chapter</div><div>Coverage</div><div>Practice &amp; assessment</div></div>
+        <div class="week"><div class="week-num">01</div><div class="week-title">ML framing, data splits &amp; linear regression</div><div><ul class="topic-list"><li><strong>0–15:</strong> ML in defensive security; features, labels, targets</li><li><strong>15–30:</strong> train, validation, and test sets; leakage</li><li><strong>30–50:</strong> linear regression, residuals, MSE, coefficients</li><li><strong>50–70:</strong> loss surfaces and gradient descent</li><li><strong>70–90:</strong> containment-time regression lab and interpretation</li></ul></div><div class="deliverable">Regression notebook with a defensible split, baseline, residual plot, and interpretation.<br><a href="week-01-introduction-framing.html">Open Week 1 deck →</a></div></div>
+        <div class="week"><div class="week-num">02</div><div class="week-title">KNN, decision trees &amp; ensembles</div><div><ul class="topic-list"><li><strong>0–20:</strong> distance, scaling, and KNN boundaries</li><li><strong>20–40:</strong> tree splits, impurity, depth, overfitting</li><li><strong>40–60:</strong> bagging and random forests</li><li><strong>60–75:</strong> boosting and feature importance</li><li><strong>75–90:</strong> compare classifiers on malicious URLs</li></ul></div><div class="deliverable">Model comparison with cross-validation and error examples.</div></div>
+        <div class="week"><div class="week-num">03</div><div class="week-title">Feature engineering for security data</div><div><ul class="topic-list"><li><strong>0–20:</strong> numeric, categorical, temporal, and missing data</li><li><strong>20–40:</strong> text, URL, process, flow, and behavioral features</li><li><strong>40–55:</strong> normalization, encoding, and pipelines</li><li><strong>55–70:</strong> leakage and point-in-time correctness</li><li><strong>70–90:</strong> feature ablation workshop</li></ul></div><div class="deliverable">Reproducible feature pipeline and data sheet.<br><span class="project">PROJECT 1</span></div></div>
+        <div class="week"><div class="week-num">04</div><div class="week-title">Logistic regression &amp; probabilistic decisions</div><div><ul class="topic-list"><li><strong>0–20:</strong> logits, sigmoid, odds, and boundaries</li><li><strong>20–40:</strong> binary cross-entropy and regularization</li><li><strong>40–60:</strong> probabilities, calibration, thresholds</li><li><strong>60–75:</strong> coefficient interpretation</li><li><strong>75–90:</strong> tune a risky-login policy</li></ul></div><div class="deliverable">Threshold recommendation tied to false-positive and false-negative costs.</div></div>
+        <div class="week"><div class="week-num">05</div><div class="week-title">Multiclass classification &amp; metrics</div><div><ul class="topic-list"><li><strong>0–20:</strong> one-vs-rest, softmax, multiclass labels</li><li><strong>20–40:</strong> confusion matrices, precision, recall, F1</li><li><strong>40–55:</strong> ROC versus precision-recall curves</li><li><strong>55–70:</strong> macro, micro, weighted metrics; imbalance</li><li><strong>70–90:</strong> malware-family error analysis</li></ul></div><div class="deliverable">SOC-facing evaluation report that rejects accuracy-only claims.</div></div>
+        <div class="week"><div class="week-num">06</div><div class="week-title">Unsupervised learning: k-means &amp; PCA</div><div><ul class="topic-list"><li><strong>0–20:</strong> clustering objectives and k-means</li><li><strong>20–40:</strong> choosing k and cluster validation</li><li><strong>40–60:</strong> variance, principal components, projection</li><li><strong>60–75:</strong> anomaly detection and limitations</li><li><strong>75–90:</strong> cluster phishing campaigns</li></ul></div><div class="deliverable">Campaign discovery report with cluster profiles and caveats.<br><span class="project">PROJECT 2</span></div></div>
+        <div class="week"><div class="week-num">07</div><div class="week-title">Classical ML integration lab</div><div><ul class="topic-list"><li><strong>0–20:</strong> select a model from data and decision constraints</li><li><strong>20–40:</strong> pipelines, cross-validation, and tuning</li><li><strong>40–60:</strong> compare supervised and unsupervised evidence</li><li><strong>60–75:</strong> temporal evaluation and drift</li><li><strong>75–90:</strong> midterm case review</li></ul></div><div class="deliverable">End-to-end detector study and midterm preparation.</div></div>
+        <div class="week"><div class="week-num">08</div><div class="week-title">Midterm</div><div><ul class="topic-list"><li><strong>0–60:</strong> cumulative practical assessment</li><li><strong>60–75:</strong> solution and misconception review</li><li><strong>75–90:</strong> final-project groups and proposal framing</li></ul></div><div class="deliverable">Midterm + final-project problem statement.</div></div>
+        <div class="week"><div class="week-num">09</div><div class="week-title">Feedforward neural networks &amp; training</div><div><ul class="topic-list"><li><strong>0–20:</strong> neurons, layers, activations, forward pass</li><li><strong>20–40:</strong> loss and backpropagation</li><li><strong>40–60:</strong> batches, epochs, optimizers, learning rates</li><li><strong>60–75:</strong> dropout, regularization, early stopping</li><li><strong>75–90:</strong> diagnose phishing-model learning curves</li></ul></div><div class="deliverable">Training report with baseline, learning curves, and ablation.</div></div>
+        <div class="week"><div class="week-num">10</div><div class="week-title">Convolutional neural networks</div><div><ul class="topic-list"><li><strong>0–20:</strong> convolution, filters, receptive fields</li><li><strong>20–40:</strong> pooling, invariance, feature maps</li><li><strong>40–60:</strong> 1D versus 2D CNNs for bytes, traffic, and images</li><li><strong>60–75:</strong> architecture and tensor-shape design</li><li><strong>75–90:</strong> malware CNN error-analysis studio</li></ul></div><div class="deliverable">CNN experiment with architecture rationale.</div></div>
+        <div class="week"><div class="week-num">11</div><div class="week-title">RNNs, LSTMs &amp; sequence embeddings</div><div><ul class="topic-list"><li><strong>0–20:</strong> sequence modeling and recurrent state</li><li><strong>20–40:</strong> vanishing gradients and LSTM gates</li><li><strong>40–55:</strong> token embeddings and sequence representations</li><li><strong>55–70:</strong> logs, API calls, and network-event sequences</li><li><strong>70–90:</strong> compare RNN, LSTM, and CNN sequence models</li></ul></div><div class="deliverable">Sequence-model comparison with temporal error analysis.<br><span class="project">PROJECT 3</span></div></div>
+        <div class="week"><div class="week-num">12</div><div class="week-title">Transformers &amp; LLM foundations</div><div><ul class="topic-list"><li><strong>0–20:</strong> sequence limits and self-attention</li><li><strong>20–40:</strong> transformer blocks, position, causal masking</li><li><strong>40–55:</strong> next-token pretraining and instruction tuning</li><li><strong>55–70:</strong> context windows and decoding</li><li><strong>70–90:</strong> prompting and structured output</li></ul></div><div class="deliverable"><strong>207 boundary:</strong> understand and use models; attacks and secure deployment belong to 290.</div></div>
+        <div class="week"><div class="week-num">13</div><div class="week-title">RAG, fine-tuning &amp; LLM evaluation</div><div><ul class="topic-list"><li><strong>0–20:</strong> chunk, embed, retrieve, generate</li><li><strong>20–35:</strong> lexical, vector, and hybrid retrieval</li><li><strong>35–50:</strong> prompting versus RAG versus fine-tuning</li><li><strong>50–70:</strong> retrieval and generation metrics</li><li><strong>70–90:</strong> compare methods on threat-report Q&amp;A</li></ul></div><div class="deliverable">Method-selection memo and evaluation report.<br><span class="project">PROJECT 4</span></div></div>
+        <div class="week"><div class="week-num">14</div><div class="week-title">Final project presentations</div><div><ul class="topic-list"><li>Problem and threat model</li><li>Evidence, evaluation, failure analysis</li><li>Deployment and monitoring plan</li></ul></div><div class="deliverable">Demo, defense, and peer review</div></div>
+      </div>
+    </section>
+
+    <section id="phases">
+      <h2>Course boundary: 207 versus 290</h2>
+      <p class="lead">The courses may use some of the same model vocabulary, but they answer different questions. CYBER 207 asks how models learn and how to evaluate their output. CYBER 290 asks how AI systems fail under attack and how to secure and govern them.</p>
+      <div class="chapter-grid">
+        <article><h3>207 · Classical ML</h3><p>Regression, optimization, KNN, trees, ensembles, feature engineering, logistic regression, multiclass metrics, k-means, and PCA.</p></article>
+        <article><h3>207 · Deep learning</h3><p>Feedforward networks, backpropagation, embeddings, CNNs, attention, transformers, and model selection.</p></article>
+        <article><h3>207 · LLM methods</h3><p>Pretraining intuition, prompting, structured output, RAG, fine-tuning choices, and task evaluation.</p></article>
+        <article><h3>290 · Threats</h3><p>Adversarial attacks, model abuse, LLM vulnerability classes, malicious prompting, and offensive assessment.</p></article>
+        <article><h3>290 · Secure architecture</h3><p>Zero-trust AI design, identity and access controls, privacy techniques, defense in depth, and secure deployment.</p></article>
+        <article><h3>290 · Operations &amp; governance</h3><p>MLSecOps, AI agents in security operations, organizational risk, compliance, and governance frameworks.</p></article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Four projects at the original milestones</h2>
+      <div class="sequence"><span class="node">feature pipeline</span><span class="arrow">→</span><span class="node">unsupervised analysis</span><span class="arrow">→</span><span class="node">deep model</span><span class="arrow">→</span><span class="node">LLM method study</span></div>
+      <div class="chapter-grid">
+        <article><h3>Project 1 · Week 3</h3><p>Build a reproducible security feature pipeline and compare classical baselines without leakage.</p></article>
+        <article><h3>Project 2 · Week 6</h3><p>Use clustering and dimensionality reduction to investigate campaigns, then explain limitations.</p></article>
+        <article><h3>Project 3 · Week 11</h3><p>Train and evaluate a deep model for text, bytes, or malware images against a classical baseline.</p></article>
+        <article><h3>Project 4 · Week 13</h3><p>Compare prompting, retrieval, and adaptation for one bounded task using a documented evaluation set.</p></article>
+      </div>
+    </section>
+
+    <section id="assessment">
+      <h2>Assessment architecture</h2>
+      <div class="assessment-grid">
+        <article class="assessment"><strong>15%</strong><h3>Weekly evidence briefs</h3><p>Short analyses connecting model results to assumptions, data quality, metrics, and operational decisions.</p></article>
+        <article class="assessment"><strong>20%</strong><h3>Midterm practical</h3><p>Build, evaluate, and critique a classical ML detector under imbalance and temporal shift.</p></article>
+        <article class="assessment"><strong>35%</strong><h3>Four scaffolded projects</h3><p>Feature pipeline, unsupervised analysis, deep model, and LLM method comparison.</p></article>
+        <article class="assessment"><strong>30%</strong><h3>Final project</h3><p>End-to-end modeling study with baselines, evaluation, failure analysis, demo, and defense.</p></article>
+      </div>
+    </section>
+
+    <section id="readings">
+      <h2>Reading strategy</h2>
+      <ul class="reading-list">
+        <li><strong>Foundation:</strong> Chollet chapters already assigned in the original agenda for tensors, optimization, generalization, text, and convolutional networks.</li>
+        <li><strong>Classical methods:</strong> Existing RM selections for linear models, trees, ensembles, unsupervised learning, and metrics.</li>
+        <li><strong>Cyber intuition:</strong> <a href="https://laplacef.github.io/deep-learning-for-cyber/">Deep Learning for Cyber</a>, especially neural networks, training, text embeddings, malware as images, and sequence models.</li>
+        <li><strong>LLM methods:</strong> Current primary material on transformers, retrieval, fine-tuning choices, and evaluation, refreshed each term.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>CYBER 207 · Machine learning methods through LLM application fundamentals</footer>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
