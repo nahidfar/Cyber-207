@@ -27,6 +27,13 @@ Complete presentation set for the redesigned 14-week course. Each week is a sepa
 - `notebooks/knn.ipynb`: manual distance calculations, neighbor voting, scaling, validation-based selection of `k`, imbalanced metrics, and decision boundaries using synthetic authentication data.
 - `notebooks/week-02-trees-bagging-boosting.ipynb`: offline synthetic-data lab for evaluation discipline, decision trees, bagging, random forests, boosting, scaled KNN, and Multinomial Naive Bayes.
 
+## Notebook walkthroughs
+
+- `walkthroughs/linear-regression-gradient-descent.html`: 60–80 minute cell-by-cell teaching guide with expected metrics, visual prompts, troubleshooting, and extensions.
+- `walkthroughs/knn.html`: 60–75 minute guide to manual distance, scaling, model selection, imbalanced evaluation, and operational interpretation.
+- `walkthroughs/trees-bagging-boosting.html`: 90–120 minute guide covering baselines, controlled trees, ensembles, boosting, model comparison, KNN, and text Naive Bayes.
+- `walkthroughs/index.html`: deployable walkthrough collection linked from the course landing page.
+
 ## Standalone topic lessons
 
 - `slides/week-01-linear-regression-gradient-descent.html`: original 30-slide lesson covering regression framing, predictions, residuals, MAE/MSE/RMSE, baselines, multiple regression, gradient derivation, learning rates, scaling, regularization, and security evaluation. Includes interactive slope/intercept and parameter-space descent demonstrations and pairs with `notebooks/linear-regression-gradient-descent.ipynb`.
