@@ -63,6 +63,35 @@ A feature pipeline claims:
 Those claims must be replayable at prediction time.
 
 ---
+# Start with the decision—not the columns
+**Decision:** which login sessions enter a limited analyst-review queue?
+
+**Prediction time:** immediately after authentication completes.
+
+**Unit of prediction:** one login session.
+
+**Outcome:** account takeover confirmed within 7 days.
+
+This framing excludes investigation notes, future activity, and any field unavailable when the login finishes.
+
+> A feature is valid only relative to a decision, entity, and timestamp.
+
+---
+# A feature contract makes meaning testable
+| Contract field | Example |
+|---|---|
+| Name | `failed_logins_user_1h` |
+| Entity | `user_id` |
+| Observation time | login completion time $t$ |
+| Window | $(t-1h,t]$ |
+| Source | authentication events |
+| Availability | event time + ingestion delay |
+| Null behavior | zero only when coverage is known |
+| Owner | identity telemetry team |
+
+Version the definition—not just the output column name.
+
+---
 # Synthetic login table
 | event_time | country | failed_1h | new_device | user_age_days | label_7d |
 |---|---|---:|---|---:|---|
@@ -84,6 +113,22 @@ Examples:
 Check units, skew, outliers, impossible values, and whether aggregation uses only past events.
 
 ---
+# Worked numeric transformation · long tails
+Raw outbound bytes often span orders of magnitude:
+
+| session | bytes_out | $\log(1+x)$ |
+|---|---:|---:|
+| A | 100 | 4.62 |
+| B | 10,000 | 9.21 |
+| C | 1,000,000 | 13.82 |
+
+```python
+df["log_bytes_out"] = np.log1p(df["bytes_out"].clip(lower=0))
+```
+
+The log transform compresses scale; it does **not** make an outlier trustworthy. First validate units, collection limits, and impossible negatives.
+
+---
 # Categorical features
 Examples: device type, protocol, parent process, country bucket.
 
@@ -94,6 +139,19 @@ Encoding options:
 - learned embeddings later.
 
 Never assign arbitrary numeric order unless order is meaningful.
+
+---
+# Worked categorical transformation · unknown is real
+Training sees `Chrome`, `Safari`, and `Firefox`. Production later sees `Arc`.
+
+| browser | Chrome | Firefox | Safari |
+|---|---:|---:|---:|
+| Chrome | 1 | 0 | 0 |
+| Arc | 0 | 0 | 0 |
+
+`handle_unknown="ignore"` prevents failure, but all-zero can mean “unknown.” Add an explicit policy or rare-category bucket when that distinction matters.
+
+**Do not** encode `Chrome=1, Safari=2, Firefox=3`; the numbers invent distance and order.
 
 ---
 # Temporal features
@@ -115,6 +173,21 @@ Options:
 - drop only with documented rationale.
 
 Missingness may reflect sensor outages, product tiers, or collection changes—not attacker behavior.
+
+---
+# Worked missingness example · two questions
+Suppose `device_age_days` is absent.
+
+1. What value allows the model to compute? Use the **training median**.
+2. Should the model know it was absent? Add `device_age_missing`.
+
+```text
+raw device_age_days = missing
+device_age_days     = 184      <- train median
+device_age_missing  = 1
+```
+
+Before treating missingness as evidence, ask whether a sensor outage or client version caused it. Missingness mechanisms drift.
 
 ---
 # Guided inventory · 5 minutes
@@ -179,6 +252,21 @@ This trailing-window count excludes the future.
 Document inclusivity at boundaries and late-arriving events.
 
 ---
+# Worked trailing-window feature
+For user `u7`, predict at **10:00** using a one-hour window $(09{:}00,10{:}00]$:
+
+| event | time | failed? | included? |
+|---|---:|---:|---|
+| e1 | 08:58 | 1 | no—too old |
+| e2 | 09:15 | 1 | yes |
+| e3 | 09:52 | 0 | yes, contributes 0 |
+| e4 | 10:04 | 1 | **no—future** |
+
+Therefore `failed_logins_user_1h = 1`, not 2.
+
+Store both **event time** and **arrival time**. Define whether late events trigger recomputation or remain absent from historical predictions.
+
+---
 # Animated pipeline discipline
 <div class="pipe"><div class="stage">raw</div><span class="packet">◆</span><div class="stage">split</div><span class="packet">◆</span><div class="stage">fit transforms</div><span class="packet">◆</span><div class="stage">model</div></div>
 
@@ -205,6 +293,23 @@ One-hot encoding:
 A pipeline is code **plus fitted state**.
 
 ---
+# `fit` learns; `transform` applies
+| Transformer | `fit(train)` learns | `transform(validation)` does |
+|---|---|---|
+| median imputer | per-column medians | fills with train medians |
+| standard scaler | $\mu_{train},\sigma_{train}$ | applies frozen scale |
+| one-hot encoder | category vocabulary/order | emits aligned columns |
+| TF–IDF | vocabulary and document frequencies | uses frozen text state |
+
+Correct order inside each fold:
+
+```text
+split -> fit preprocessing on train -> transform train + validation -> fit model -> score
+```
+
+Fitting preprocessing before the split leaks validation distribution even without labels.
+
+---
 # Point-in-time correctness
 Apply this test to every row-feature pair:
 > This exact value can be computed at prediction timestamp $t$ using only data available by $t$.
@@ -219,6 +324,19 @@ If no, the offline model is solving a different, easier problem.
 4. **Entity bleed:** same campaign variants across folds.
 
 Leakage can produce plausible—not obviously perfect—scores.
+
+---
+# Worked leakage audit
+| Candidate feature | Available at login time? | Decision |
+|---|---|---|
+| failed logins in prior hour | yes | keep |
+| device first seen before this login | yes | keep |
+| password reset in next 24 hours | no | reject: future window |
+| final incident disposition | no | reject: target leakage |
+| user mean fit using all dates | no | rebuild inside fold |
+| campaign ID split across train/test | technically yes | group split to prevent memorization |
+
+“Present in the table” is not the same as “available to the production prediction.”
 
 ---
 # Data sheet essentials
@@ -273,6 +391,34 @@ Time: 12 minutes + 5-minute debrief.
 - Behavioral features generalize better but cost more to compute.
 - Minimal pipelines are easier to audit and reproduce.
 - Feature freshness and sensor ownership matter as much as model choice.
+
+---
+# Offline/online parity is a feature requirement
+A notebook can use a clean historical join while production sees delayed, duplicated, or reordered events.
+
+For every feature, test:
+- same code or shared specification offline and online;
+- same timezone, window boundaries, and default values;
+- stable output names, order, and data types;
+- behavior for unknown categories and schema changes;
+- maximum age and latency budget;
+- comparison of sampled online values with offline recomputation.
+
+Train-serving skew is a data-quality incident, not merely model drift.
+
+---
+# Feature selection asks a deployment question
+Keep a feature when it adds stable decision value relative to its cost.
+
+Evaluate:
+- validation PR-AUC and high-cost errors;
+- variability across time/entity folds;
+- extraction latency and availability;
+- cardinality, memory, and inference cost;
+- drift, abuse, privacy, and ownership risk;
+- performance after removing the feature group.
+
+Importance describes model reliance. It does not prove usefulness, causality, or safety.
 
 ---
 # scikit-learn implementation
