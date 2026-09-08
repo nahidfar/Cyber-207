@@ -1,40 +1,17 @@
 # CYBER 207 — Machine Learning & Deep Learning for Cybersecurity
 
-Complete presentation set for the redesigned 14-week course. Each week is a separate 90-minute Marp deck with animated HTML and PowerPoint exports.
+Student-facing presentation and notebook set for the redesigned 14-week course.
 
 ## Weekly presentations
 
-| Week | Topic | PowerPoint |
-|---:|---|---|
-| 1 | ML framing, data splits, and linear regression | `slides/CYBER207-Week-01-ML-Framing-Splits-Linear-Regression.pptx` |
-| 2 | KNN, decision trees, and ensembles | `slides/CYBER207-Week-02-KNN-Trees-Ensembles.pptx` |
-| 3 | Security feature engineering | `slides/CYBER207-Week-03-Security-Feature-Engineering.pptx` |
-| 4 | Logistic regression and probabilistic decisions | `slides/CYBER207-Week-04-Logistic-Regression.pptx` |
-| 5 | Multiclass classification and metrics | `slides/CYBER207-Week-05-Multiclass-and-Metrics.pptx` |
-| 6 | K-means and PCA | `slides/CYBER207-Week-06-KMeans-and-PCA.pptx` |
-| 7 | Classical ML integration and midterm review | `slides/CYBER207-Week-07-Classical-ML-Integration.pptx` |
-| 8 | Midterm and final-project framing | `slides/CYBER207-Week-08-Midterm-and-Project-Framing.pptx` |
-| 9 | Feedforward neural networks and training | `slides/CYBER207-Week-09-Feedforward-Neural-Networks.pptx` |
-| 10 | Convolutional neural networks | `slides/CYBER207-Week-10-Convolutional-Neural-Networks.pptx` |
-| 11 | RNNs, LSTMs, and sequence embeddings | `slides/CYBER207-Week-11-RNNs-LSTMs-Sequence-Embeddings.pptx` |
-| 12 | Transformers and LLM foundations | `slides/CYBER207-Week-12-Transformers-and-LLM-Foundations.pptx` |
-| 13 | RAG, fine-tuning, and LLM evaluation | `slides/CYBER207-Week-13-RAG-Fine-Tuning-LLM-Evaluation.pptx` |
-| 14 | Final project presentations | `slides/CYBER207-Week-14-Final-Project-Presentations.pptx` |
+The rendered HTML decks are available in `slides/` and from the course landing page.
 
-## Instructor-guided notebooks
+## Student notebooks
 
 - `notebooks/linear-regression-gradient-descent.ipynb`: from-scratch gradient descent, learning-rate behavior, leakage-safe regression pipelines, baselines, and residual analysis using synthetic alert-triage data.
 - `notebooks/knn.ipynb`: manual distance calculations, neighbor voting, scaling, validation-based selection of `k`, imbalanced metrics, and decision boundaries using synthetic authentication data.
 - `notebooks/week-02-trees-bagging-boosting.ipynb`: offline synthetic-data lab for evaluation discipline, decision trees, bagging, random forests, boosting, scaled KNN, and Multinomial Naive Bayes.
 - `notebooks/security-feature-engineering.ipynb`: point-in-time feature construction, missingness, categorical encoding, robust scaling, leakage detection, ablation, drift checks, and feature-contract tests using synthetic network telemetry.
-
-## Notebook walkthroughs
-
-- `walkthroughs/linear-regression-gradient-descent.html`: 60–80 minute cell-by-cell teaching guide with expected metrics, visual prompts, troubleshooting, and extensions.
-- `walkthroughs/knn.html`: 60–75 minute guide to manual distance, scaling, model selection, imbalanced evaluation, and operational interpretation.
-- `walkthroughs/trees-bagging-boosting.html`: 90–120 minute guide covering baselines, controlled trees, ensembles, boosting, model comparison, KNN, and text Naive Bayes.
-- `walkthroughs/security-feature-engineering.html`: 75–90 minute guide to measurement framing, temporal features, leakage-safe pipelines, feature selection, deployment surprises, and feature contracts.
-- `walkthroughs/index.html`: deployable walkthrough collection linked from the course landing page.
 
 ## Standalone topic lessons
 
@@ -45,12 +22,10 @@ Complete presentation set for the redesigned 14-week course. Each week is a sepa
 
 ## Structure
 
-- `slides/week-*.md`: editable Marp presentation sources with original concept animations
 - `slides/week-*.html`: browser presentations with CSS algorithm animations
-- `slides/CYBER207-Week-*.pptx`: separate PowerPoint presentations
-- `instructor/all-weeks-slide-guide.md`: preparation, misconceptions, activity anchors, and timing adjustments
+- `notebooks/*.ipynb`: executable student labs
 - `course-syllabus.html`: detailed 14-week course roadmap
 
-The decks use visual, intuition-first explanations followed by compact mathematics, defensive cybersecurity examples, scikit-learn implementations, important parameter guidance, and operational interpretation. Quiz and question slides are intentionally omitted. HTML exports animate core algorithm concepts and respect reduced-motion preferences; PowerPoint exports retain readable static versions.
+The decks use visual, intuition-first explanations followed by compact mathematics, defensive cybersecurity examples, scikit-learn implementations, important parameter guidance, and operational interpretation. HTML exports animate core algorithm concepts and respect reduced-motion preferences.
 
 The course maintains the intended boundary with CYBER 290: CYBER 207 focuses on how models learn, how to evaluate them, and how to select methods for defensive cybersecurity applications.
