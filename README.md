@@ -12,6 +12,9 @@ The rendered HTML decks are available in `slides/` and from the course landing p
 - `notebooks/knn.ipynb`: manual distance calculations, neighbor voting, scaling, validation-based selection of `k`, imbalanced metrics, and decision boundaries using synthetic authentication data.
 - `notebooks/week-02-trees-bagging-boosting.ipynb`: offline synthetic-data lab for evaluation discipline, decision trees, bagging, random forests, boosting, scaled KNN, and Multinomial Naive Bayes.
 - `notebooks/security-feature-engineering.ipynb`: point-in-time feature construction, missingness, categorical encoding, robust scaling, leakage detection, ablation, drift checks, and feature-contract tests using synthetic network telemetry.
+- `notebooks/pca.ipynb`: PCA practice for recognizing redundant high-dimensional security data, selecting components, and interpreting lower-dimensional projections.
+- `notebooks/kmeans.ipynb`: K-means clustering practice covering preprocessing, cluster selection, visualization, and security-oriented interpretation.
+- `notebooks/unsw-nb15-integrated-capstone.ipynb`: integrated UNSW-NB15 practice applying the course workflow to network intrusion data.
 
 ## Standalone topic lessons
 
